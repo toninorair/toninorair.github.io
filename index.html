@@ -84,7 +84,14 @@ nav {
 .hero-title .dim {
   color: var(--text-2); font-style: italic;
   display: inline-block;
-  transition: opacity 15s ease-in-out;
+  animation: deconstruct 14s ease-in-out infinite;
+}
+@keyframes deconstruct {
+  0%   { opacity: 1; }
+  30%  { opacity: 0; }
+  55%  { opacity: 0; }
+  80%  { opacity: 1; }
+  100% { opacity: 1; }
 }
 
 .hero-sub {
@@ -440,7 +447,7 @@ An<span class="b">toni</span>na Norair
           <span class="sep"></span>
           <span>Deep Dive</span>
         </div>
-        <h3 class="article-title">M0 V1 Core</h3>
+        <h3 class="article-title">M0 V1</h3>
         <p class="article-summary">Two years in, M0 has processed over $1.1B in mints, expanded to Solana and 15+ EVM chains, and become the first white-labeled stablecoin platform. With JMI and new liquidity offerings on the horizon, going back to basics: how and why things were built the way they were.</p>
         <a href="m0-v1-core.html" class="article-link">Read Article</a>
       </article>
@@ -467,10 +474,10 @@ An<span class="b">toni</span>na Norair
   <section class="about-section">
     <button class="about-back" onclick="showMain()">&larr; Back</button>
     <h2>About</h2>
-    <p>Hi, my name is An<strong>toni</strong>na and I'm from Kyiv, Ukraine <span style="color:#0057b7">&#9829;</span><span style="color:#ffd700">&#9829;</span>. The last 8 years I've spent in the US, splitting time between SF and NYC. I love both, but undeniably I vibe better with the latter.</p>
-    <p>After moving to the US, I got into blockchain engineering and later found myself in DeFi &mdash; finally loving what I do &mdash; and connecting the dots of my past: an applied math masters following a private math &amp; physics lyceum sponsored by George Soros (not a joke &mdash; genuinely grateful for that).</p>
-    <p>Currently, I'm leading the engineering team at <a href="https://www.m0.org/" target="_blank" style="text-decoration:underline;text-underline-offset:4px;">M0</a>, building out things in the hottest and most stable corner of the industry, while slowly working toward a second degree in finance from Harvard Extension School. When DeFi &amp; TradFi worlds merge into something productive, I want to be there too.</p>
-    <p>When I'm not working or chasing kids around (still almost never), I like to get out and explore countless beautiful places around NYC.</p>
+    <p>Hi, my name is An-toni-na and I'm from Kyiv, Ukraine <span style="color:#0057b7">&#9829;</span><span style="color:#ffd700">&#9829;</span>. I've spent the last eight years in the US, splitting time between SF and NYC. I love both, but undeniably, I vibe better with the latter.</p>
+    <p>After moving to the US, I got into blockchain engineering and later found myself in DeFi &mdash; finally loving what I do and connecting the dots of my past: a math &amp; physics lyceum, an applied math master's, and systems programming at an undisclosed R&amp;D lab.</p>
+    <p>Currently, I'm leading the engineering team at <a href="https://www.m0.org/" target="_blank" style="text-decoration:underline;text-underline-offset:4px;">M0</a>, building in the hottest &#128293; and most stable corner of the industry, while slowly working toward a second degree in finance from Harvard Extension School. When TradFi &amp; DeFi worlds merge into something productive, I want to be there too.</p>
+    <p>When I'm not working or chasing kids around (which is almost never), I like to get out and explore the countless beautiful places in and around NYC.</p>
   </section>
 </div>
 </div>
@@ -486,14 +493,6 @@ An<span class="b">toni</span>na Norair
 
 <!-- Scripts -->
 <script>
-// Fade out "deconstructing"
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    var dim = document.querySelector('.hero-title .dim');
-    if(dim) dim.style.opacity = '0';
-  }, 100);
-});
-
 // Scroll fade-in
 (function(){
   var obs=new IntersectionObserver(function(entries){
