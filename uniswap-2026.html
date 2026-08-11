@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uniswap in 2026 - Antonina Norair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --bg: #fafafa;
+  --border: rgba(0,0,0,0.08);
+  --border-h: rgba(0,0,0,0.14);
+  --text: #111;
+  --text-2: #555;
+  --text-3: #999;
+  --text-4: #bbb;
+  --code-bg: #eeeeee;
+  --code-text: #2a2a2a;
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+a:hover { color: #000; }
+::selection { background: rgba(0,0,0,0.08); }
+
+/* Nav */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 40px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(250,250,250,0.85);
+  border-bottom: 1px solid var(--border);
+}
+.nav-back {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.nav-back:hover { color: var(--text); }
+
+/* Article */
+.article-wrap { max-width: 1060px; margin: 0 auto; padding: 60px 40px 120px; }
+
+.article-meta {
+  font-family: var(--mono); font-size: 12px; color: var(--text-3);
+  margin-bottom: 16px; letter-spacing: 0.5px;
+}
+
+.article-title {
+  font-family: var(--serif); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 24px;
+}
+
+.article-subtitle {
+  font-size: 18px; color: var(--text-2); line-height: 1.7;
+  margin-bottom: 48px; padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-h);
+}
+
+/* Content */
+.content h2 {
+  font-family: var(--serif); font-size: 24px; font-weight: 600;
+  color: var(--text); margin: 48px 0 16px; line-height: 1.3;
+}
+.content h3 {
+  font-family: var(--sans); font-size: 17px; font-weight: 600;
+  color: var(--text); margin: 32px 0 12px;
+}
+.content p {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.content strong { color: var(--text); }
+.content ul, .content ol {
+  margin: 16px 0; padding-left: 24px;
+}
+.content li {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 8px;
+}
+.content code {
+  font-family: var(--mono); font-size: 14px;
+  background: var(--code-bg); padding: 2px 6px; border-radius: 3px;
+  color: var(--code-text);
+}
+.content pre {
+  background: var(--code-bg); border-radius: 6px;
+  padding: 20px 24px; margin: 20px 0 24px;
+  overflow-x: auto; border-left: 3px solid rgba(0,0,0,0.35);
+}
+.content pre code {
+  background: none; padding: 0; font-size: 14px; line-height: 1.7;
+  color: var(--code-text);
+}
+.content hr {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-h), transparent);
+  margin: 48px 0;
+}
+.content .note {
+  font-size: 15px; color: var(--text-3); font-style: italic;
+  margin: 16px 0;
+}
+
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .article-wrap { padding: 40px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">&larr; Back to home</a>
+</nav>
+
+
+<div class="article-wrap">
+  <div class="article-meta">August 6, 2026 &middot; ⏳ 10 min &middot; <a href="https://x.com/0xtoninorair/article/2085409170660991233" target="_blank" style="text-decoration:underline;text-underline-offset:3px">X &nearr;</a></div>
+  <h1 class="article-title">Uniswap in 2026: A Graceful Shift Toward an Institutional Future. The Story in Three Projects.</h1>
+
+  <img src="images/uniswap-2026/cover.jpg" alt="Uniswap in 2026" style="width:100%; height:auto; display:block; border-radius:8px; margin-bottom:2rem;">
+
+  <div class="content">
+
+    <p>Change is the only constant, and intelligence is the ability to adapt to change in LiFe and in the DeFi Digital Assets space. Uniswap is a good example: not only has it gone through years, teams, and four successful iterations of the core protocol, but it is now gracefully and, to the untrained eye, seamlessly shifting toward institutional adoption. The key 2026 projects to notice: BUIDL swaps via UniswapX, DualPool Hooks with Spark, and Permissioned Pools.</p>
+
+    <hr>
+
+    <h2>Project One: UniswapX BUIDL/USDC Swaps</h2>
+
+    <h3>Brief</h3>
+
+    <p>On Feb 11, 2026, Uniswap Labs and Securitize announced a strategic integration making BlackRock&rsquo;s BUIDL tradable via UniswapX, allowing investors to trade BUIDL into USDC and back, with market makers Flowdesk, Tokka Labs, and Wintermute filling orders at launch.</p>
+
+    <h3>Technical Context</h3>
+
+    <p>UniswapX is an intent-based trading protocol, launched in July 2023: instead of executing swaps against a pool, the user signs an off-chain order stating what they want (sell X for at least Y). The order first runs through an RFQ (request for quote) round where quoters compete for a brief exclusive fill window; if unfilled, it opens into a Dutch auction decaying toward the user&rsquo;s minimum price. A filler executes an order by calling a Reactor contract, which pulls the user&rsquo;s tokens via Permit2 and enforces delivery of the output tokens at the auction price, atomically. Fillers can source liquidity anywhere &mdash; ordinary Uniswap pools, other DEXs, CEXs, or their own inventory. Fillers pay the gas for executing the order, and given that the order is signed off-chain, this prevents the sandwich-style MEV attacks that common onchain swaps are susceptible to. Because fillers are identifiable and whitelistable, the model supports permissioned order flow, which is what allows compliance-gated assets like BUIDL to trade on UniswapX.</p>
+
+    <h3>How Does It Actually Work?</h3>
+
+    <figure style="margin:32px 0">
+      <img src="images/uniswap-2026/image1.jpeg" alt="UniswapX BUIDL/USDC swap flow" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <p><strong>(1) &rarr; (2):</strong> The BUIDL holder requests a quote for a BUIDL &rarr; USDC swap; the Uniswap API runs an RFQ (Request for Quote) auction among allowlisted market makers &mdash; Wintermute, Flowdesk, Tokka Labs.</p>
+
+    <p><strong>(3) &rarr; (4) &rarr; (5):</strong> The API returns a parameterized order (output amount, decay window, deadline, nonce); the holder signs it off-chain as a Permit2 message bound to the exact order terms and posts the signed order to the Uniswap backend.</p>
+
+    <p><strong>(6) &rarr; (7):</strong> The winning market maker (filler) fetches the order and fills it through the V2DutchOrderReactor contract, which executes the BUIDL/USDC swap atomically by pulling BUIDL from the holder via Permit2 and delivering USDC from the market maker in the same transaction.</p>
+
+    <h3>Results and Flows</h3>
+
+    <p>All traces of onchain activity hint at limited use so far. Most transactions were minor and executed in Feb 2026. As institutional flows and appetite grow, the number of assets tradable via Uniswap&rsquo;s intent-based UniswapX system may grow too.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/uniswap-2026/image2.jpeg" alt="UniswapX BUIDL swap onchain activity" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">
+        <a href="https://etherscan.io/tx/0x14de4ef09e16c7c5e5097575e209f41f37c76726c2409be958ab62aa2044d5fe" target="_blank" style="text-decoration:underline;text-underline-offset:3px">View transaction on Etherscan &nearr;</a>
+      </figcaption>
+    </figure>
+
+    <hr>
+
+    <h2>Project Two: Spark and Uniswap DualPool Hook</h2>
+
+    <h3>Brief</h3>
+
+    <p>On June 25, 2026, Uniswap Labs, Spark, and Sky announced the &lsquo;FX Layer for stablecoins,&rsquo; with Spark migrating ~$150M into Uniswap v4 USDS/USDT and USDS/PYUSD pools; the collaboration&rsquo;s DualPool hook went live July 22, letting pool capital earn yield in Spark&rsquo;s ERC-4626 vaults between swaps, with Spark operating the largest deployment. The &lsquo;FX&rsquo; framing of the announcement means that stablecoins from different issuers trade like currency pairs, with USDS as the quoting asset all flows route through, so N stablecoins need only N pools instead of one per pair.</p>
+
+    <h3>Technical Context</h3>
+
+    <p>DualPool is a Uniswap v4 hook, developed by Uniswap Labs in collaboration with Spark. Hooks are the defining feature of Uniswap v4, which launched on mainnet January 31, 2025. In v4&rsquo;s architecture, all pools live inside a single PoolManager contract (the singleton), and each pool can designate one hook contract at creation. A hook customizes the pool&rsquo;s immutable swap logic by invoking custom logic before and after the main calls &mdash; swaps, liquidity changes, and initialization.</p>
+
+    <p>DualPool lets market makers earn lending yield on their inventory until the moment an AMM swap needs it, solving the tradeoff between providing AMM liquidity and earning yield on idle capital. Between swaps, a DualPool holds approximately zero resident liquidity in the PoolManager (the v4 singleton contract that custodies all pool tokens in Uniswap v4). Instead, the pool&rsquo;s capital rests in ERC-4626 vaults, and the hook deploys concentrated liquidity just-in-time (JIT), inside the beforeSwap hook call, for exactly one swap &mdash; then removes it again in the afterSwap hook call.</p>
+
+    <h3>How Does It Actually Work?</h3>
+
+    <figure style="margin:32px 0">
+      <img src="images/uniswap-2026/image3.jpeg" alt="DualPool hook swap flow" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <p><strong>(1) &rarr; (2):</strong> The swapper submits an ordinary v4 swap to the PoolManager, which triggers the hook&rsquo;s beforeSwap callback before any swap math runs.</p>
+
+    <p><strong>(3a) &rarr; (3b):</strong> Inside beforeSwap, the hook computes the inventory its tick ranges need at the current price and withdraws only the shortfall from the bound ERC-4626 vaults, then posts it into the PoolManager as concentrated liquidity positions.</p>
+
+    <p><strong>(4) &rarr; (5):</strong> The PoolManager executes standard v4 swap math against the just-minted positions; the hook&rsquo;s afterSwap then removes every position it added, returning the pool to approximately zero resident liquidity.</p>
+
+    <p><strong>(6) &rarr; (7):</strong> The hook redeposits the remaining inventory plus earned swap fees back into the vaults, and the swapper receives their output tokens from the PoolManager with all steps settling atomically in the single swap transaction.</p>
+
+    <h3>Results</h3>
+
+    <p>So far Spark has reallocated $150M into common Uniswap v4 pools with no DualPool hooks or Vault liquidity allocation enabled. Keeping an eye on the transition to the next stage given that the DualPool announcement is very recent (end of July).</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/uniswap-2026/image4.jpeg" alt="Spark liquidity reallocation into Uniswap v4 pools" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <hr>
+
+    <h2>Project Three: Permissioned Pools with Hooks</h2>
+
+    <h3>Brief</h3>
+
+    <p>On July 23, 2026, Uniswap Labs announced Permissioned Pools, a v4 hook standard for trading compliance-gated assets on an AMM, developed with Securitize, Superstate, and Dowgo, live on Ethereum mainnet.</p>
+
+    <h3>Technical Context</h3>
+
+    <p>The design keeps the restricted asset out of the shared PoolManager entirely: a Permissions Adapter custodies the underlying security token and mints a 1:1 wrapper that the pool actually trades, with wrapping and unwrapping handled by the Universal Router and a Permissioned Position Manager. This is yet another Uniswap approach, alongside Project One (UniswapX + BUIDL swaps), to trading and growing into the RWA security-token space, where assets carry built-in transfer restrictions.</p>
+
+    <h3>How Does It Actually Work?</h3>
+
+    <figure style="margin:32px 0">
+      <img src="images/uniswap-2026/image5.jpeg" alt="Permissioned Pools architecture" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <p>The Uniswap Permissioned Pools architecture consists of four components:</p>
+
+    <ul>
+      <li><strong>Permissions Adapter</strong> &mdash; an ERC-20 wrapper that custodies the security token and mints a wrapper token 1:1. Only the wrapper tokens are held within the v4 PoolManager (the v4 singleton holding all swappable tokens); the restricted asset never leaves the adapter contract.</li>
+      <li><strong>Universal Router and Permissioned Position Manager</strong> &mdash; swaps through the Universal Router and liquidity provisioning through the Permissioned Position Manager both route via the Permissions Adapter first, converting between the security token and its wrapper. LP position NFTs are non-transferable as well.</li>
+      <li><strong>AllowList Checker</strong> &mdash; a registry contract mapping address &rarr; token &rarr; permission (swap, liquidity, or both). Reusable across wrappers, so issuers of security tokens maintain eligibility in one place.</li>
+      <li><strong>Permissioned Hook</strong> &mdash; a standard v4 hook attached to the pool that re-checks the allowlist before every swap and liquidity provision.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Conclusion</h2>
+
+    <p>Uniswap is clearly reaping the rewards of thoughtful design, architecture, and innovation, allowing composability and adjustments via hooks and permissioned execution via intent-based systems like UniswapX, all while keeping the core permissionless primitive immutable, preserving the decentralization ethos of a space marching toward institutional adoption. As in nature, the most adaptable (protocols) survive, thrive, and grow TVL &amp; flows, and valuations, while the rest disappear into extinction in a world that does not wait for those not ready to embrace change.</p>
+
+  </div>
+</div>
+
+<footer style="border-top:1px solid rgba(0,0,0,0.08); padding:28px 40px; display:flex; align-items:center; justify-content:flex-end;">
+  <div style="display:flex; gap:24px;">
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">GitHub</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">Twitter</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeFi Primitive: Billion-Dollar Algorithm - Antonina Norair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --bg: #fafafa;
+  --border: rgba(0,0,0,0.08);
+  --border-h: rgba(0,0,0,0.14);
+  --text: #111;
+  --text-2: #555;
+  --text-3: #999;
+  --text-4: #bbb;
+  --code-bg: #eeeeee;
+  --code-text: #2a2a2a;
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+a:hover { color: #000; }
+::selection { background: rgba(0,0,0,0.08); }
+
+/* Nav */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 40px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(250,250,250,0.85);
+  border-bottom: 1px solid var(--border);
+}
+.nav-back {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.nav-back:hover { color: var(--text); }
+
+/* Article */
+.article-wrap { max-width: 1060px; margin: 0 auto; padding: 60px 40px 120px; }
+
+.article-meta {
+  font-family: var(--mono); font-size: 12px; color: var(--text-3);
+  margin-bottom: 16px; letter-spacing: 0.5px;
+}
+
+.article-title {
+  font-family: var(--serif); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 24px;
+}
+
+/* Content */
+.content h2 {
+  font-family: var(--serif); font-size: 24px; font-weight: 600;
+  color: var(--text); margin: 48px 0 16px; line-height: 1.3;
+}
+.content h3 {
+  font-family: var(--sans); font-size: 17px; font-weight: 600;
+  color: var(--text); margin: 32px 0 12px;
+}
+.content p {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.content strong { color: var(--text); }
+.content ul, .content ol {
+  margin: 16px 0; padding-left: 24px;
+}
+.content li {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 8px;
+}
+.content code {
+  font-family: var(--mono); font-size: 14px;
+  background: var(--code-bg); padding: 2px 6px; border-radius: 3px;
+  color: var(--code-text);
+}
+.content pre {
+  background: var(--code-bg); border-radius: 6px;
+  padding: 20px 24px; margin: 20px 0 24px;
+  overflow-x: auto; border-left: 3px solid rgba(0,0,0,0.35);
+}
+.content pre code {
+  background: none; padding: 0; font-size: 14px; line-height: 1.7;
+  color: var(--code-text);
+}
+.content hr {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-h), transparent);
+  margin: 48px 0;
+}
+.content .note {
+  font-size: 15px; color: var(--text-3); font-style: italic;
+  margin: 16px 0;
+}
+.content figcaption {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--text-3); font-style: italic;
+}
+.content a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .article-wrap { padding: 40px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">&larr; Back to home</a>
+</nav>
+
+
+<div class="article-wrap">
+  <div class="article-meta">October 15, 2024 &middot; ⏳ 5 min &middot; <a href="https://x.com/0xtoninorair/article/1846027492382867791" target="_blank" style="text-decoration:underline;text-underline-offset:3px">X &nearr;</a></div>
+  <img src="images/defi-primitive/cover.jpg" alt="DeFi primitive - billion-dollar algorithm: Scalable Reward Distribution whitepaper" style="width:100%; height:auto; display:block; border-radius:8px; margin-bottom:2rem;">
+
+  <div class="content">
+
+    <p>Simple is way more than simplistic. Many white papers in the DeFi space seem to be written more to impress than to educate. Curious readers often find themselves lost in a sea of advanced mathematical formulas filled with Greek symbols. Instead of gaining clarity, they leave the experience feeling more confused and less confident than when they began. Fortunately, the reality of building protocols is often different. It is based on a few fundamentally simple &mdash; though not simplistic &mdash; algorithms. These DeFi primitives power multi-billion-dollar protocols and have become essential tools in the DeFi engineer&rsquo;s toolkit.</p>
+
+    <figure style="margin:32px auto; max-width:520px">
+      <img src="images/defi-primitive/image1.png" alt="Attitude towards algo, eng, and life: simplistic, complex, simple" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <h2>A Billion-Dollar Algorithm</h2>
+
+    <p>A prime example is an algorithm that eventually earned the name &lsquo;billion-dollar algorithm&rsquo; and became the de facto standard for staking rewards contracts. It has become so ubiquitous in the space that it is often used without a second thought, sometimes without even realizing it&rsquo;s in play. This algorithm solves the common challenge of distributing token rewards among users based on their pro-rata deposits / stakes.</p>
+
+    <p>It all began with the <a href="https://batog.info/papers/scalable-reward-distribution.pdf" target="_blank">Scalable Reward Distribution on the Ethereum Blockchain</a> whitepaper, written in 2018 for DappCon by Bogdan Batog, Lucian Boca, and Nick Johnson. The whitepaper defined the distinction between &lsquo;Pull&rsquo; and &lsquo;Push&rsquo; reward distribution mechanisms, explaining why the Push mechanism is impractical for blockchains and how to implement the Pull model effectively. Let&rsquo;s define the difference:</p>
+
+    <ul>
+      <li><strong>Push</strong> &mdash; In this model, rewards are explicitly distributed to users by iterating over all their addresses, calculating a reward for each, and either sending or storing the reward for future claims. As the name suggests, rewards are &lsquo;pushed&rsquo; to users without their interaction. While this approach is common in Web2 engineering, it is impractical in Web3. As the number of users grows, the distributor faces unrealistic transaction costs.</li>
+      <li><strong>Pull</strong> &mdash; In this model, distributors send the total reward amount to a distribution contract, but the actual reward calculations and claims are done by each user individually. Users interact with the protocol to calculate and retrieve their pro-rata share of the reward, meaning they bear the gas cost for the calculations and transfers. Users &lsquo;pull&rsquo; their rewards, making this model scalable and cost-effective for the distributor and in general.</li>
+    </ul>
+
+    <h2>Core Logic</h2>
+
+    <p>A simplified version of the algorithm where a user is allowed to deposit and withdraw only once.</p>
+
+    <figure style="margin:32px auto; max-width:820px">
+      <img src="images/defi-primitive/image2.jpeg" alt="One deposit, one withdrawal - simplified reward distribution algorithm" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <p>A more practical version allows users to deposit and withdraw multiple times. Rewards are calculated and distributed before any changes are made to the eligible reward amount (i.e., before each deposit or withdrawal).</p>
+
+    <figure style="margin:32px auto; max-width:820px">
+      <img src="images/defi-primitive/image3.jpeg" alt="Multiple deposits, multiple withdrawals - practical reward distribution algorithm" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+    </figure>
+
+    <h2>History of Adoption</h2>
+
+    <p>It is everywhere, literally. The first liquidity mining program where rewards were computed on-chain was SNX&rsquo;s incentive for the sETH Uniswap pool. This was implemented in the Unipool sETH contract, written in 2019 by Anton Bukov. [2]</p>
+
+    <p>Today, the algorithm is used by many projects in the Ethereum ecosystem. For example, Uniswap v3 uses it to track fees earned by individual positions, SushiSwap uses it in its MasterChef smart contract to incentivize liquidity providers, and 1inch has adapted it as part of their ERC20Plugins concept to allow farming without a need to stake tokens. [3]</p>
+
+    <p>The simplest conceptual implementations I would like to refer: <a href="https://solidity-by-example.org/defi/staking-rewards/" target="_blank">Solidity By Example: Staking rewards</a>, <a href="https://solidity-by-example.org/defi/discrete-staking-rewards/" target="_blank">Solidity By Example: Discrete Staking rewards</a>. The widespread popularity and adoption of the algorithm place it among the top DeFi primitives, continually proving that simple is way more than simplistic.</p>
+
+    <h2>References</h2>
+
+    <ol>
+      <li><a href="https://batog.info/papers/scalable-reward-distribution.pdf" target="_blank">https://batog.info/papers/scalable-reward-distribution.pdf</a></li>
+      <li><a href="https://www.paradigm.xyz/2021/05/liquidity-mining-on-uniswap-v3" target="_blank">https://www.paradigm.xyz/2021/05/liquidity-mining-on-uniswap-v3</a></li>
+      <li><a href="https://github.com/euler-xyz/reward-streams" target="_blank">https://github.com/euler-xyz/reward-streams</a></li>
+    </ol>
+
+  </div>
+</div>
+
+<footer style="border-top:1px solid rgba(0,0,0,0.08); padding:28px 40px; display:flex; align-items:center; justify-content:flex-end;">
+  <div style="display:flex; gap:24px;">
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">GitHub</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">Twitter</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M0 Protocol Basics - Antonina Norair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --bg: #fafafa;
+  --border: rgba(0,0,0,0.08);
+  --border-h: rgba(0,0,0,0.14);
+  --text: #111;
+  --text-2: #555;
+  --text-3: #999;
+  --text-4: #bbb;
+  --code-bg: #eeeeee;
+  --code-text: #2a2a2a;
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+a:hover { color: #000; }
+::selection { background: rgba(0,0,0,0.08); }
+
+/* Nav */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 40px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(250,250,250,0.85);
+  border-bottom: 1px solid var(--border);
+}
+.nav-back {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.nav-back:hover { color: var(--text); }
+
+/* Article */
+.article-wrap { max-width: 1060px; margin: 0 auto; padding: 60px 40px 120px; }
+
+.article-meta {
+  font-family: var(--mono); font-size: 12px; color: var(--text-3);
+  margin-bottom: 16px; letter-spacing: 0.5px;
+}
+
+.article-title {
+  font-family: var(--serif); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 24px;
+}
+
+.article-subtitle {
+  font-size: 18px; color: var(--text-2); line-height: 1.7;
+  margin-bottom: 48px; padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-h);
+}
+
+/* Content */
+.content h2 {
+  font-family: var(--serif); font-size: 24px; font-weight: 600;
+  color: var(--text); margin: 48px 0 16px; line-height: 1.3;
+}
+.content h3 {
+  font-family: var(--sans); font-size: 17px; font-weight: 600;
+  color: var(--text); margin: 32px 0 12px;
+}
+.content p {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.content strong { color: var(--text); }
+.content ul, .content ol {
+  margin: 16px 0; padding-left: 24px;
+}
+.content li {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 8px;
+}
+.content code {
+  font-family: var(--mono); font-size: 14px;
+  background: var(--code-bg); padding: 2px 6px; border-radius: 3px;
+  color: var(--code-text);
+}
+.content pre {
+  background: var(--code-bg); border-radius: 6px;
+  padding: 20px 24px; margin: 20px 0 24px;
+  overflow-x: auto; border-left: 3px solid rgba(0,0,0,0.35);
+}
+.content pre code {
+  background: none; padding: 0; font-size: 14px; line-height: 1.7;
+  color: var(--code-text);
+}
+.content hr {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-h), transparent);
+  margin: 48px 0;
+}
+.content .note {
+  font-size: 15px; color: var(--text-3); font-style: italic;
+  margin: 16px 0;
+}
+.content blockquote {
+  border-left: 3px solid rgba(0,0,0,0.35);
+  padding: 8px 24px; margin: 24px 0;
+  font-family: var(--serif); font-style: italic;
+  font-size: 17px; color: var(--text-2);
+}
+.content figcaption {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--text-3); font-style: italic;
+}
+.content a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .article-wrap { padding: 40px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">&larr; Back to home</a>
+</nav>
+
+
+<div class="article-wrap">
+  <div class="article-meta">August 28, 2024 &middot; ⏳ 12 min &middot; <a href="https://research.m0.org/research/m-0-protocol-basics-minter-rate-global-interest-rate-index-and-key-principles" target="_blank" style="text-decoration:underline;text-underline-offset:3px">M0 Research &nearr;</a></div>
+  <h1 class="article-title">M0 Protocol Basics: Minter Rate, Global Interest Rate Index, and Key Principles</h1>
+
+  <div style="position:relative; aspect-ratio:5/2; margin:0 0 2rem; border-radius:8px; overflow:hidden;">
+    <img src="images/m0-protocol-basics/image1.png" alt="" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(32px) brightness(1.03); transform:scale(1.15);">
+    <img src="images/m0-protocol-basics/image1.png" alt="Pade, Euler, Taylor, TradFi and DeFi protocols that heavily inspired the M0 designs" style="position:relative; display:block; height:113.6%; width:auto; margin:0 auto; transform:translateY(-12%);">
+  </div>
+
+  <div class="content">
+
+    <h2>M0 Protocol Series Overview</h2>
+
+    <p>The first $M stablecoins were minted on the Ethereum mainnet in <a href="https://etherscan.io/tx/0x94cdd8dd7fa750a9e4c79bca15c78bc316d63f76cade95dafa8383c8ee4182e9" target="_blank">early June 2024</a>. Behind the scenes, this seemingly simple act for the <a href="https://governance.m0.org/proposal/56160272499918471298363063104979322001281711335820073731972064917179464956345" target="_blank">first Minter</a> was orchestrated through a sophisticated system of actors and entities coordinating on the immutable M0 Protocol. Today, we have several ecosystem actors (Minters, Collateral Storages, Validators, and Earners) that are united not only through clear economic incentives and compliance with the <a href="https://docs.m0.org/home/getting-started/adopted-guidance/" target="_blank">Adopted Guidance</a>, but also through the fundamental mechanics of Solidity code and financial algorithms.</p>
+
+    <p>Although the logic and math behind modern DeFi protocols are often seen as complex and hard to grasp, our engineering team here at M0 would like to invite you to join us on this written journey on how we built our protocol from scratch, called the <strong>M0 Protocol Engineering Series</strong>. This first article in the series aims to break down the fundamentals of interest rate accruals and balances for the various actors within the M0 ecosystem.</p>
+
+    <p>The M0 engineering team has been fortunate to have the opportunity to innovate over the last year, for example, by introducing the <a href="https://github.com/m0-foundation/protocol/blob/main/src/libs/ContinuousIndexingMath.sol#L127-L144" target="_blank">first implementation of Pade approximation for continuous compounding in Solidity</a>. However, as innovation typically goes, many concepts and implementations are built upon the past foundational work of others &mdash; we recognize that we stand on the shoulders of giants. Special credit goes to blue-chip DeFi 1.0 protocols like MakerDAO, Compound, and Maple, etc&hellip;, as well as battle-tested algorithms of traditional finance and the hundreds of years of development in financial markets that have shaped our thinking.</p>
+
+    <h2>Minter Rate Accrual, Principal and Interest Rate Indices</h2>
+
+    <p>Leveraging both established financial principles and innovative on-chain solutions, we have developed a unique approach to issuing and maintaining the $M stablecoin through our M0 Minters. M0 Minters issue the $M stablecoin against collateral verified by Validators. The system relies on off-chain collateral held in orphaned SPVs (Special Purpose Vehicles) and signatures generated by Validators to confirm the Minters&rsquo; collateral balances. While the collateral is managed off-chain, the accrual of interest on $M is controlled by fully transparent, on-chain algorithms.</p>
+
+    <p>For minting and holding $M, Minters must pay a Minter rate fee which accrues continuously to their $M balances. The <a href="https://governance.m0.org/proposal/24416065978494649432385754765465613162572830179293731619456279945519869154047" target="_blank">Minter rate parameter</a> and the logic of its calculation <a href="https://etherscan.io/address/0xca144b0ebf6b8d1ddb5ddb730a8d530fe7f70d62" target="_blank">MinterRateModel smart contract</a> are set via <a href="https://governance.m0.org/proposals/" target="_blank">M0 TTG Governance</a>.</p>
+
+    <p>As Minters hold $M, they continuously accrue interest on their outstanding $M balances which must be repaid to retrieve off-chain collateral. The value of this balance in the M0 Protocol is called <a href="https://etherscan.io/address/0xf7f9638cb444D65e5A40bF5ff98ebE4ff319F04E#readContract#F6" target="_blank"><code>activeOwedMOf</code></a>. The value of <code>activeOwedMOf</code> increases over time, reflecting the accrued interest, which is automatically distributed between Earners and <a href="https://etherscan.io/address/0xd7298f620B0F752Cf41BD818a16C756d9dCAA34f" target="_blank">Distribution Vault</a> (claimable by <a href="https://etherscan.io/address/0x988567FE094570cCE1FFdA29D1f2d842B70492be" target="_blank">ZERO</a> holders).</p>
+
+    <p><strong><em>The first set of questions we will address in this article are: how do you precisely track the balance that Minters owe at any point in time, and how do you build a Solidity protocol that accurately and reliably charges interest for the minting of $M?</em></strong></p>
+
+    <p>Let&rsquo;s dig deeper into the code basics and how it can be built.</p>
+
+    <p><strong>Step 1. <em>Let&rsquo;s assume for simplicity&rsquo;s sake a Minter mints $100 M, with the Minter rate set at 5% APR. What will the balance of the Minter be at the end of the year?</em></strong></p>
+
+    <p>The calculation here is straightforward: at the end of the year, the $M the Minter owes to the protocol will be 105 $M.</p>
+
+    <pre><code>Total Owed M (minter) = Total Minted M (minter) &times; (1 + 0.05)</code></pre>
+
+    <p><strong>Step 2. <em>Let&rsquo;s add some complexity to the scenario. In addition to initially minting $100 M, the Minter wants to mint an extra 1 $M every day and then repay the entire balance to the protocol at the end of the year. What is the simplest way to achieve this?</em></strong></p>
+
+    <p>Intuitively, we understand that before each new mint, the Minter has to accrue interest to their previously owed $M balance. The interest rate scale has to be adjusted from annual to daily. With a daily interest rate of ~0.013%, the Minter&rsquo;s balance becomes:</p>
+
+    <p>At the end of Day 1:</p>
+
+    <pre><code>Minter Balance = 100 &times; (1 + 0.00013) + 1 newly minted M = 101.01</code></pre>
+
+    <p>At the end of Day 2:</p>
+
+    <pre><code>Minter Balance = 101.01 &times; (1 + 0.00013) + 1 newly minted M = 102.02</code></pre>
+
+    <p>and so on&hellip;</p>
+
+    <p>Advanced readers are likely already considering simple and continuous compounding formulas, as well as compounding intervals, and they are correct in these assumptions.</p>
+
+    <p><strong>Step 3. <em>What if we don&rsquo;t want to limit the Minter to predetermined minting intervals and compounding intervals are totally random? At any moment in time, M0 Protocol users should be able to query the Minters currently owed $M balance.</em></strong></p>
+
+    <p>The logical approach would be to decrease the compounding frequency to the smallest possible unit, such as on a per-second basis. This involves adjusting the APY rate to a per-second rate and tracking the time since the Minter&rsquo;s last interaction with the protocol, using a simple compounding formula:</p>
+
+    <pre><code>Minter Owed M(t1) = Minter Owed M(t0) &times; (1 + rate_second)^secondsSinceLastAccrual,
+secondsSinceLastAccrual = t1 - t0</code></pre>
+
+    <p>Or continuous compounding formula:</p>
+
+    <pre><code>Minter Owed M(t1) = Minter Owed M(t0) &times; e^(rate_second &times; secondsSinceLastAccrual),
+secondsSinceLastAccrual = t1 - t0</code></pre>
+
+    <p>The implementation we have provided here is correct, but not yet efficient, even for this primitive use case. Also, the reader might ask, where does the complexity come in, and when will the index and principal finally come into play?</p>
+
+    <p><strong>Step 4. <em>The last set of questions we have to answer now is how do we calculate the total owed $M across all Minters, and why is this important for the M0 Protocol?</em></strong></p>
+
+    <p>Understanding the &lsquo;why&rsquo; is often easier than understanding the &lsquo;how.&rsquo; With DeFi protocols, total amounts are crucial, not just for providing transparency to users, but also for fundamental calculations like utilization rates and safety margins. For example, they are essential for adjusting Borrow and Supply rates in lending markets.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/m0-protocol-basics/image2.png" alt="Utilization rate for Compound USDC/ETH market" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption>Example: <a href="https://app.compound.finance/markets/usdc-mainnet" target="_blank">Utilization rate for Compound USDC/ETH market</a>, a key factor for determining Borrow and Earn APRs</figcaption>
+    </figure>
+
+    <p>For the M0 Protocol, the total owed $M that accrues yield is an important metric used to calculate the <a href="https://governance.m0.org/proposal/55192143648394536089644130330213226261656628599333078113271622642278589001977" target="_blank">safe EarnerRate</a> to determine the yield that is distributed back to Earners.</p>
+
+    <p>The &lsquo;how&rsquo; might seem straightforward: by looping through all Minters and calculating the sum of the total amount of owed $M for each, we can determine the total owed $M for all Minters:</p>
+
+    <pre><code>Total Owed M (Minters) = &Sigma; Total Owed M (Minter)</code></pre>
+
+    <p>This solution will definitely work for a few Minters and Earners in the system, but it becomes impractical for a heavily used protocol deployed on a popular blockchain like Ethereum. Gas-intensive looping to calculate these simple metrics can very quickly become too costly and infeasible in practice. But no worries, DeFi protocols have you covered &mdash; in other words:</p>
+
+    <blockquote><strong>&ldquo;Necessity is the mother of invention&rdquo;</strong><br>Plato, a long time ago</blockquote>
+
+    <p><strong>Step 5. A Real Solution &mdash; Principles and Indices</strong></p>
+
+    <p>We clearly need a solution to this issue. Complexity cannot be solved by adding more complexity, so it&rsquo;s time to return to fundamentals. When examining the interest rate formulas below, a common element emerges across them. Can you identify it?</p>
+
+    <figure style="margin:32px auto; max-width:70%">
+      <img src="images/m0-protocol-basics/image3.png" alt="Formulas for Simple, Compound, and Continuously Compounded Interest" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption><a href="https://www.onlinemathlearning.com/simple-interest-formula.html" target="_blank">Formulas</a> for Simple Interest, Compound Interest, and Continuously Compounded Interest</figcaption>
+    </figure>
+
+    <p>Hint: Regardless of the formula, it always boils down to the <strong>Principal &times; Multiplier</strong> which includes interest rate and time.</p>
+
+    <p>Given that the M0 Protocol charges the same interest rate for every Minter in the system, this multiplier can be replaced by a single, globally shared variable that reflects the accrual of rates across the system. We&rsquo;ll refer to it as the <strong>system interest rate index</strong>, or simply the <strong>Index</strong>.</p>
+
+    <p>Intuitively, we can now derive the following formulas for the protocol:</p>
+
+    <pre><code>Total Owed M       = Total Principal &times; Index
+Owed M (Minter1)   = Principal (Minter1) &times; Index
+Owed M (Minter2)   = Principal (Minter2) &times; Index
+Total Owed M       = Owed M (Minter1) + Owed M (Minter2)
+Total Principal    = Principal (Minter1) + Principal (Minter2)</code></pre>
+
+    <p>For simplicity, let&rsquo;s assume that the global index is calculated based on its previous value, the rate, and time, without delving into the specific formulas used to achieve this:</p>
+
+    <pre><code>Index(t2) = fn(Index(t1), rate, t2 - t1),  Index(t2) &ge; Index(t1)</code></pre>
+
+    <p>The index will always increase in value over time, reflecting the universal accrual of interest within the system. With this understanding, we are now prepared to address the fundamental question of this article: How can we track and store Minters&rsquo; balances internally? The answer lies in using both the principal and the global index.</p>
+
+    <p>Returning to the example where a Minter mints $100 M, the M0 Protocol will calculate the principal amount based on $100 M and the current value of the index:</p>
+
+    <pre><code>Principal (Minter1, 100M) = 100 M / Index(current)</code></pre>
+
+    <p>And converting it back to the current balance of owed M:</p>
+
+    <pre><code>Owed M (Minter1) = Principal (Minter1, 100M) &times; Index(current, t1)</code></pre>
+
+    <p>As time elapses, the global index will reflect the accrual of the rate in the system and Minter&rsquo;s owed $M will automatically increase with the index&rsquo;s growth:</p>
+
+    <pre><code>Owed M (Minter1, 100M, t2) = Principal (Minter1, 100M, t2) &times; Index(t2),
+where Index(t2) &gt; Index(t1)</code></pre>
+
+    <p>The final question is how the Minter&rsquo;s principal changes if additional $M is minted or existing $M is burned from their account to release collateral. In such cases, the protocol will need to adjust the existing Minter&rsquo;s principal balance by adding or deducting the new delta of the principal.</p>
+
+    <ul>
+      <li>At t3 minting of an extra 10 $M will increase Minter&rsquo;s principal and owed $M values:
+        <pre><code>Owed M (Minter1, t3) = (Principal (Minter1, 100M, t2) + Principal (Minter1, 10M, t3)) &times; Index(t3)</code></pre>
+      </li>
+      <li>At t3 burning of 10 $M (repaying it to the Protocol) will decrease Minter&rsquo;s principal and owed M values:
+        <pre><code>Owed M (Minter1, t3) = (Principal (Minter1, 100M, t2) - Principal (Minter1, 10M, t3)) &times; Index(t3)</code></pre>
+      </li>
+    </ul>
+
+    <p>In addition to tracking the principal amount for every Minter, the M0 Protocol also tracks the total principal for all Minters, referred to as <code>totalPrincipal</code>. It allows calculations of the total amount of Owed $M by all Minters. This will become relevant later when we discuss adjustments to the Earner rate based on total values.</p>
+
+    <pre><code>Total Owed M = totalPrincipal &times; index,  where totalPrincipal = &Sigma; Principal (Minter i)</code></pre>
+
+    <p>Furthermore, the principal can be thought of as &ldquo;owed $M at the t0 (time zero)&rdquo; or &ldquo;amount of $M that if minted at t0 would result in the present amount of owed $M&rdquo;. Usually, t0 is the moment when the protocol is deployed, marking the start of the system interest rate accrual. At t0, the global index is equal to 1 &times; indexScale.</p>
+
+    <p>This concept of principal in DeFi was originally introduced by MakerDao and is named <a href="https://docs.makerdao.com/smart-contract-modules/rates-module#example-with-visualizations" target="_blank">&lsquo;art&rsquo;</a> in MCD&rsquo;s glossary.</p>
+
+    <p><strong>Putting it all together:</strong></p>
+
+    <p>To review concepts of principal and value at time zero in more detail, let&rsquo;s look at the use case of a Minter who is minting equal amounts of 100 $M at t0 (time zero, deployment of protocol) and later on &mdash; at t1 and t2.</p>
+
+    <p>Usually <em>indexScale</em> is picked in the range of [1e12, 1e18], but for simplicity of calculations, let&rsquo;s assume that <em>indexScale</em> = 1e4.</p>
+
+    <ul>
+      <li>At t0 Minter has issued 100 $M, Index = 1 &times; 1e4:
+        <pre><code>principal(0) = (amount &times; indexScale) / index(t0) = (100 $M &times; 1e4) / 1e4 = 100 M</code></pre>
+      </li>
+      <li>At t1 the index has increased to 11000, the equivalent amount of minted $M at t0 to match 100 $M at t1 will be:
+        <pre><code>principal(1) = (amount &times; indexScale) / index(t1) = (100 $M &times; 1e4) / 11000 &asymp; 91 $M</code></pre>
+        So 91 $M minted at t0 will equal 100 $M minted at t1 with index = 11000;
+      </li>
+      <li>At t2 the index is 12000, the equivalent amount of minted $M at t0 to match 100 $M at t2:
+        <pre><code>principal(2) = (amount &times; indexScale) / index(t2) = (100 $M &times; 1e4) / 12000 &asymp; 83 $M</code></pre>
+        So 83 $M minted at t0 will equal 100 $M minted at t2 with index = 12000.
+      </li>
+    </ul>
+
+    <p>And to reiterate the mechanism of interest accrual moving forward in time, let&rsquo;s assume that at t3 index has reached 13000. At this point:</p>
+
+    <ul>
+      <li>100 $M minted at t0 with an equivalent principal(0) of 100 $M will be equal
+        <pre><code>Owed M (Minter1, 100 $M, t0) = (principal(0) &times; index(t3)) / indexScale = (100 $M &times; 13000) / 1e4 &asymp; 130 $M</code></pre>
+      </li>
+      <li>100 $M minted at t1 with an equivalent principal(1) of 91 $M will be equal
+        <pre><code>Owed M (Minter1, 100 $M, t1) = (principal(1) &times; index(t3)) / indexScale = (91 $M &times; 13000) / 1e4 &asymp; 118 $M</code></pre>
+      </li>
+      <li>100 $M minted at t2 with an equivalent principal(2) of 83 $M will be equal
+        <pre><code>Owed M (Minter1, 100 $M, t2) = (principal(2) &times; index(t3)) / indexScale = (83 $M &times; 13000) / 1e4 &asymp; 108 $M</code></pre>
+      </li>
+    </ul>
+
+    <p>And there you have it &mdash; the puzzle is complete and now the M0 Protocol can simply and precisely calculate the owed amount of $M per Minter as well as the overall system totals. One global index leads to an accurate and gas-efficient solution in Solidity code.</p>
+
+    <h2>Next Articles</h2>
+
+    <p>While many questions and concepts were addressed in this article, there is still much more to explore. We have only scratched the surface of the actual interest accrual within the index and the Solidity math behind it. In the next article, we will review index calculations in more detail, looking into the differences between linear and continuous compounding, and the approximations for continuous compounding with the Euler number in Solidity. Additionally, we will discuss when to store index updates and how the M0 Protocol handles changes in interest rates.</p>
+
+    <p>Future articles will also dive into more M0 Protocol-specific topics, such as the distribution of accrued interest to Earners, calculations of safe Earner rates based on total system amounts, and much more.</p>
+
+    <p>Stay tuned and see you next time.</p>
+
+    <h2>References</h2>
+
+    <p>To learn more about M0 Protocol and TTG governance:</p>
+
+    <ol>
+      <li>Whitepaper | M0 Documentation Portal. <a href="https://docs.m0.org/portal" target="_blank">https://docs.m0.org/portal</a></li>
+      <li>M0 Governance portal <a href="https://governance.m0.org/proposals/" target="_blank">https://governance.m0.org/proposals/</a></li>
+    </ol>
+
+    <p>For mechanics of principals and indices in DeFi protocols, I highly recommend the following articles:</p>
+
+    <ol>
+      <li>Rates Module | Maker Protocol Technical Docs. (n.d.). <a href="https://docs.makerdao.com/smart-contract-modules/rates-module" target="_blank">https://docs.makerdao.com/smart-contract-modules/rates-module</a></li>
+      <li>Mcveigh, C. (2021, December 15). Math behind the magic &mdash; Defi Yield. <a href="https://ciaranmcveigh5.medium.com/math-behind-the-magic-defi-yield-c1db2f0d216c" target="_blank">https://ciaranmcveigh5.medium.com/math-behind-the-magic-defi-yield-c1db2f0d216c</a></li>
+      <li>Naumov, K. (2022, June 10). Back to the basics: Compound, Aave. <a href="https://medium.com/@kinaumov/back-to-the-basics-compound-aave-436a1887ad94" target="_blank">https://medium.com/@kinaumov/back-to-the-basics-compound-aave-436a1887ad94</a></li>
+      <li>Gudgeon L., Werner S., Perez D., Knottenbelt W. (2020). DeFi protocols for loanable funds: Interest rates, liquidity and market efficiency. Proceedings of the 2nd ACM Conference on Advances in Financial Technologies, (pp. 92-112). 10.1145/3419614.3423254</li>
+    </ol>
+
+    <hr>
+
+    <p><strong>About M0</strong></p>
+
+    <p>M0 is the universal platform powering builders of application-specific stablecoins. With M0, developers can build safe, programmable and interoperable digital dollars.</p>
+
+  </div>
+</div>
+
+<footer style="border-top:1px solid rgba(0,0,0,0.08); padding:28px 40px; display:flex; align-items:center; justify-content:flex-end;">
+  <div style="display:flex; gap:24px;">
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">GitHub</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">Twitter</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
