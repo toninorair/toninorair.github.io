@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PYUSDx Beyond the Launch - Antonina Norair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --bg: #fafafa;
+  --border: rgba(0,0,0,0.08);
+  --border-h: rgba(0,0,0,0.14);
+  --text: #111;
+  --text-2: #555;
+  --text-3: #999;
+  --text-4: #bbb;
+  --code-bg: #eeeeee;
+  --code-text: #2a2a2a;
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+a:hover { color: #000; }
+::selection { background: rgba(0,0,0,0.08); }
+
+/* Nav */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 40px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(250,250,250,0.85);
+  border-bottom: 1px solid var(--border);
+}
+.nav-back {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.nav-back:hover { color: var(--text); }
+
+/* Article */
+.article-wrap { max-width: 1060px; margin: 0 auto; padding: 60px 40px 120px; }
+
+.article-meta {
+  font-family: var(--mono); font-size: 12px; color: var(--text-3);
+  margin-bottom: 16px; letter-spacing: 0.5px;
+}
+
+.article-title {
+  font-family: var(--serif); font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 24px;
+}
+
+.article-subtitle {
+  font-size: 18px; color: var(--text-2); line-height: 1.7;
+  margin-bottom: 48px; padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-h);
+}
+
+/* Content */
+.content h2 {
+  font-family: var(--serif); font-size: 24px; font-weight: 600;
+  color: var(--text); margin: 48px 0 16px; line-height: 1.3;
+}
+.content h3 {
+  font-family: var(--sans); font-size: 17px; font-weight: 600;
+  color: var(--text); margin: 32px 0 12px;
+}
+.content p {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.content strong { color: var(--text); }
+.content ul, .content ol {
+  margin: 16px 0; padding-left: 24px;
+}
+.content li {
+  font-size: 16px; color: var(--text-2); line-height: 1.8;
+  margin-bottom: 8px;
+}
+.content code {
+  font-family: var(--mono); font-size: 14px;
+  background: var(--code-bg); padding: 2px 6px; border-radius: 3px;
+  color: var(--code-text);
+}
+.content pre {
+  background: var(--code-bg); border-radius: 6px;
+  padding: 20px 24px; margin: 20px 0 24px;
+  overflow-x: auto; border-left: 3px solid rgba(0,0,0,0.35);
+}
+.content pre code {
+  background: none; padding: 0; font-size: 14px; line-height: 1.7;
+  color: var(--code-text);
+}
+.content hr {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-h), transparent);
+  margin: 48px 0;
+}
+.content .note {
+  font-size: 15px; color: var(--text-3); font-style: italic;
+  margin: 16px 0;
+}
+
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .article-wrap { padding: 40px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">&larr; Back to home</a>
+</nav>
+
+
+<div class="article-wrap">
+  <div class="article-meta">September 21, 2026 &middot; ⏳ 7 min &middot; <a href="https://x.com/0xtoninorair/status/2102025362108547077" target="_blank" style="text-decoration:underline;text-underline-offset:3px">X &nearr;</a></div>
+  <h1 class="article-title">PYUSDx Beyond the Launch: The Technical Design of the PYUSD Developer Platform</h1>
+
+  <img src="images/pyusdx/cover.jpg" alt="PYUSDx Beyond the Launch" style="width:100%; height:auto; display:block; border-radius:8px; margin-bottom:2rem;">
+
+  <div class="content">
+
+    <p>📖 Reading time: 7 min<br>👀 Viewing time: 5 min</p>
+
+    <p class="note"><strong>A note on terminology.</strong> Throughout this article, the terms stablecoin and extension are used interchangeably to refer to the tokens issued on the PYUSDx platform. This article reflects common market terminology, not a legal or regulatory characterization of these token products.</p>
+
+    <p>On Sep 9th, M0, PayPal, and MoonPay <a href="https://www.coindesk.com/business/2026/09/09/paypal-expands-stablecoin-rails-with-launch-of-custom-token-issuance-platform" target="_blank" style="text-decoration:underline;text-underline-offset:3px">officially launched the first white-label stablecoin platform</a>. Its design is built on two years of developing the M0 Extensions framework, which powered the launch of 20+ extensions across 15+ EVM chains, with automatic rewards accounting and the ability to redirect rewards to selected recipients.</p>
+
+    <p>How is it built? Let&rsquo;s dive into the weeds while keeping the high-level design in sight.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/pyusdx/image1.jpg" alt="PYUSDx Developer Platform architecture" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Architecture &mdash; you&rsquo;ll need one of those big fancy screens to enjoy it in full</figcaption>
+    </figure>
+
+    <hr>
+
+    <h2>Part 1. It All Starts with the Base X Token</h2>
+
+    <p>PYUSDx is the base X token of this developer platform. It is backed 1:1 by PYUSD and reflects the accrual of rewards from its native token, PYUSD.</p>
+
+    <p>PYUSDx is an ERC-20, non-rebasing token with custom-built reward accrual and redirection logic. The earner manager can add so-called earners and set their reward rate, an optional claim recipient, and a fee. Earners automatically accrue rewards on their holdings using the principal and earner-index accounting model. For extra details, review <a href="m0-v1-core.html" style="text-decoration:underline;text-underline-offset:3px">this longread</a>.</p>
+
+    <p>Compared to the first M0 Extension, <a href="https://docs.m0.org/protocol/wrapped-m" target="_blank" style="text-decoration:underline;text-underline-offset:3px">WrappedM</a>, PYUSDx allows earners to have different rates and tracks a separate rewards index for each of them. Such rewards are claimed explicitly.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/pyusdx/image2.jpg" alt="Base X asset issuance" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Base X Asset Issuance</figcaption>
+    </figure>
+
+    <p>Why does this matter, and why is it the key to the developer platform? This automatic reward accrual and optional redirection unlocks several use cases:</p>
+
+    <ul>
+      <li>Building stablecoins as wrappers of PYUSDx, where the wrapper is an earner with a defined rate. All PYUSDx rewards are converted into rewards of the end extension. In this case, the claim recipient of the PYUSDx is the stablecoin contract itself.</li>
+      <li>Supplying PYUSDx into DeFi venues such as DEXes, vaults, and lending markets, where the end contract automatically accrues rewards that are redirected to a designated claim recipient &mdash; commonly one other than the contract itself.</li>
+      <li>Allowing an earner to hold a balance and earn rewards on it. For example, the M0 solver holds an inventory of PYUSDx for filling end-stablecoin orders and accrues rewards on that inventory.</li>
+    </ul>
+
+    <p>PYUSDx is a token issued by MoonPay via the M0-built Issuer Gateway. Given the onchain nature of PYUSD, minting and redemption from and into PYUSDx are performed with minimal delay to support security and operational continuity.</p>
+
+    <hr>
+
+    <h2>Part 2. PYUSDx Extensions and the M0 Swap Facility</h2>
+
+    <p>As mentioned previously, platform stablecoins like <a href="https://concrete.xyz/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Concrete</a>, <a href="https://www.cap.app/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Cap</a>, and <a href="https://saturn.credit/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Saturn</a> are ERC-20 compatible wrappers of PYUSDx: they are registered earners with automatic reward accrual and a standard set of compliance policy checks, including pausing and account freezing.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/pyusdx/image3.jpg" alt="Developer Platform core" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Developer Platform Core</figcaption>
+    </figure>
+
+    <p>The most popular extension model, and the one that has found widespread usage and product-market fit, is MultiMint. It allows the extension owner to enable instantaneous 1:1 minting of the end stablecoin against stablecoins other than PYUSDx, such as PYUSD or USDC.</p>
+
+    <p>Behind the scenes, the M0 solver replaces these tokens with PYUSDx. The extension builder can set custom asset caps and whitelist or delist assets as the need arises. Currently, the M0 solver replaces such tokens 1:1. Since rewards accrue only on PYUSDx, temporarily not all of the extension&rsquo;s supply accrues rewards claimable by the extension builder &mdash; a tradeoff the extension owner is willing to take for the convenience of user mint flows.</p>
+
+    <p>Swaps between extensions and PYUSDx happen permissionlessly via the M0 Swap Facility, 1:1.</p>
+
+    <p>Additionally, bridging of PYUSDx and its tokens is supported by a custom PYUSDx Portal utilizing the LayerZero Bridge Adapter.</p>
+
+    <hr>
+
+    <h2>Part 3. Liquidity Layer</h2>
+
+    <p>To serve PYUSDx end-extension user flows, M0 provides several mechanisms:</p>
+
+    <ul>
+      <li><strong>Inflows</strong> via MultiMint extensions with enabled stablecoin inflows, where deposited stablecoins are replaced with PYUSDx by the M0 solver.</li>
+      <li><strong>Optional intent-based inflows</strong> via the M0 Orchestration API and LOP (Limit Order Protocol), where user orders are filled by a network of solvers. M0 LOP follows the standard intent-based order flow but additionally allows customized partial fills of large orders.</li>
+      <li><strong>Outflows</strong> are served exclusively through the Orchestration API and LOP.</li>
+    </ul>
+
+    <figure style="margin:32px 0">
+      <img src="images/pyusdx/image4.jpg" alt="M0 Liquidity Layer" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">M0 Liquidity Layer &mdash; Orchestration, Onchain Intents, Solver Network</figcaption>
+    </figure>
+
+    <p>All inflows and outflows of PYUSDx-issued stablecoins are served via the M0 Orchestration API. The M0 solver intelligently rebalances its inventory, which consists of end stablecoins, PYUSDx, and external stablecoins like USDC and PYUSD. When needed, inventory is rebalanced through available onchain venues or, if extra PYUSDx must be minted or redeemed, through the MoonPay Iron Dashboard &amp; API.</p>
+
+    <hr>
+
+    <h2>Part 4. Nerdy Extras &amp; Last but Not Least</h2>
+
+    <p>The technical architecture has a few unique points worth diving into. One example: the <code>ExtensionFactory</code> contract and its per-type beacon registries. Each extension type, like RevenueDirect and MultiMint, has its own beacon, and M0 registers every new implementation there as a numbered version, with older versions kept and still addressable. Extensions deployed through the factory are beacon proxies that resolve the current version on each call, so they inherit M0&rsquo;s upgrades by default, with no action needed from the builder. Upgrades are never forced: an extension&rsquo;s version manager can pin it to any registered version, which detaches the extension from the beacon&rsquo;s latest implementation, and can unpin it later to rejoin. Code and agentic nerds can dive deeper <a href="https://github.com/m0-platform/PYUSDx/blob/main/src/platform/ExtensionBeacon.sol" target="_blank" style="text-decoration:underline;text-underline-offset:3px">here</a>.</p>
+
+    <figure style="margin:32px 0">
+      <img src="images/pyusdx/image5.jpg" alt="Beacon proxy with versioned upgrades" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Beacon Proxy with Versioned Upgrades</figcaption>
+    </figure>
+
+    <hr>
+
+    <p>While the PYUSDx Developer Platform is not even a month old, still growing its TVL and its set of partner extensions, a new spiral is inevitably forming for the project and its core team. What is it? Time will tell. So, as always, onward to the next wave 🌊</p>
+
+  </div>
+</div>
+
+<footer style="border-top:1px solid rgba(0,0,0,0.08); padding:28px 40px; display:flex; align-items:center; justify-content:flex-end;">
+  <div style="display:flex; gap:24px;">
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">GitHub</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">Twitter</a>
+    <a href="#" style="font-family:var(--mono); font-size:11px; color:var(--text-3);">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
