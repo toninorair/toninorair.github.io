@@ -286,12 +286,23 @@ nav {
   text-transform: uppercase; color: var(--text-3);
   padding-bottom: 12px; margin-bottom: 28px; border-bottom: 1px solid var(--border);
 }
-.cv-item { display: grid; grid-template-columns: 170px 1fr; gap: 32px; margin-bottom: 30px; }
+.cv-item { display: grid; grid-template-columns: 170px 1fr; gap: 86px; margin-bottom: 30px; }
 .cv-when {
   font-family: var(--sans); font-size: 13px; color: var(--text-3);
   font-variant-numeric: tabular-nums; padding-top: 2px; white-space: nowrap;
 }
-.cv-what { max-width: 720px; }
+.cv-what { max-width: 720px; position: relative; }
+.cv-logo {
+  position: absolute; left: -54px; top: 0; width: 36px; height: 36px;
+  border-radius: 9px; overflow: hidden; background: var(--thumb-bg);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.cv-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cv-logo-mono {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--accent);
+  background: linear-gradient(135deg, var(--thumb-bg), var(--accent-soft));
+}
 .cv-what h4 {
   font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--text);
   letter-spacing: -0.011em; line-height: 1.45;
@@ -307,6 +318,8 @@ nav {
 .cv-what a:hover { color: var(--accent); text-decoration-color: currentColor; }
 @media (max-width: 700px) {
   .cv-item { grid-template-columns: 1fr; gap: 4px; }
+  .cv-what:has(.cv-logo) { padding-left: 48px; }
+  .cv-logo { left: 0; }
 }
 
 /* Placeholder page */
@@ -804,6 +817,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Mar 2023 &ndash; Oct 2026</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/m0.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://www.m0.org/" target="_blank">M0</a></span> <span class="cv-role">&middot; CTO</span></h4>
           <div class="cv-place">NYC, US</div>
           <ul><li>Co-architected the M0 V1 core protocol, its governance module, and the Stablecoin Extension framework, the first of its kind in DeFi, which scaled to 18+ EVM chains, Solana, and Stellar and powered 20+ custom stablecoins at a $900M+ TVL peak.</li><li>Led the architecture and technical launch of M0&rsquo;s flagship stablecoin projects through its issuance and liquidity offerings, including <a href="https://www.m0.org/press-releases/metamask-becomes-first-self-custodial-wallet-to-introduce-its-native-stablecoin-in-partnership-with-bridge-and-m0" target="_blank">MetaMask USD</a> with ConsenSys, <a href="https://www.m0.org/press-releases/moneygram-launches-mgusd-a-stablecoin-to-power-its-own-global-network" target="_blank">MoneyGram&rsquo;s MGUSD</a>, and the <a href="https://www.m0.org/press-releases/moonpay-m0-and-paypal-announce-pyusdx-the-infrastructure-platform-for-pyusd-backed-stablecoins" target="_blank">PayPal PYUSDx Developer Platform</a>.</li><li>Onboarded major US stablecoin issuers, including <a href="https://www.bridge.xyz/" target="_blank">Bridge</a>, <a href="https://www.moonpay.com/" target="_blank">MoonPay</a>, and <a href="https://1money.com/" target="_blank">1Money</a>, onto the M0 platform.</li><li>Scaled the engineering organization from 0 to 16 engineers across four teams (Issuance, Liquidity, Integration, M0 Internal Issuer), sustaining 90%+ annual retention in a high-turnover industry.</li><li>Restructured the legacy M0 Issuer team and modernized its backend while maintaining full operational continuity.</li><li>Coordinated up to 50 audits spanning internal and external reviews, AI-assisted analysis, audit competitions, and formal verification.</li></ul>
@@ -812,6 +826,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">May 2024 &ndash; Present</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/fission.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://fission.xyz/" target="_blank">Fission Labs</a></span> <span class="cv-role">&middot; Technical Advisor</span></h4>
           
           <ul><li>Partnered with the CTO of Fission Labs to define its set of onchain products and deliverables.</li><li>Onboarded external engineering contractors and ran AI-assisted reviews of their code.</li></ul>
@@ -820,6 +835,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Sep 2022 &ndash; Mar 2023</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/moonpay.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://www.moonpay.com/" target="_blank">MoonPay</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
           <div class="cv-place">Remote</div>
           <p>Co-developed the backend for MoonPay&rsquo;s self-custodial wallet powering its NFT marketplace.</p>
@@ -828,6 +844,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Apr 2020 &ndash; Aug 2022</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/compound.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://compound.finance/" target="_blank">Compound Labs</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
           <div class="cv-place">San Francisco, US</div>
           <ul><li>Co-designed and engineered Compound V3 (Comet), a lending protocol that reached $2.5B in peak TVL.</li><li>Contributed to Compound V2&rsquo;s Open Price Feed and the COMP governance token launch that kicked off DeFi Summer 2020.</li><li>Created Compound Autonomous Proposals (CAPs), a governance mechanism adopted by Compound and later by Uniswap to further decentralize protocol governance.</li></ul>
@@ -836,6 +853,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Jan 2018 &ndash; Mar 2020</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/consensys.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://consensys.io/" target="_blank">ConsenSys</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
           <div class="cv-place">San Francisco, US</div>
           <ul><li>Developed an Ethereum proof-of-concept with the Radiant Earth Foundation (on Kaleido and AWS) that tracks satellite-imagery licensing and payments on-chain, so NGOs can get geospatial data faster in disasters.</li><li>Contributed to an early real-world asset (RWA) tokenization platform.</li><li>Shipped CodeFi products, including CodeFi Activate and CodeFi Payments.</li></ul>
@@ -844,6 +862,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Jul 2017 &ndash; Jan 2018</div>
         <div class="cv-what">
+          <div class="cv-logo cv-logo-mono" aria-hidden="true">B</div>
           <h4><span class="cv-org"><a href="https://www.linkedin.com/company/bosonic-digital/" target="_blank">Bosonic</a></span> <span class="cv-role">&middot; Blockchain Engineer</span></h4>
           <div class="cv-place">San Francisco, US</div>
           <p>Implemented BTC-to-ETH atomic swaps for the Bosonic Network, a cross-custodian settlement platform for real-time netting, clearing, and atomic payment-versus-payment settlement that removes counterparty credit and settlement risk.</p>
@@ -852,6 +871,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Jan 2016 &ndash; Mar 2017</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/sourcegraph.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://sourcegraph.com/" target="_blank">Sourcegraph</a> / Tristero Consulting</span> <span class="cv-role">&middot; Senior Backend Engineer</span></h4>
           <div class="cv-place">Kyiv, Ukraine</div>
           <p>Implemented core components of Sourcegraph&rsquo;s code analysis engine, which powered cross-repository go-to-definition, find-references, and semantic code navigation.</p>
@@ -860,7 +880,8 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Jul 2013 &ndash; Jan 2016</div>
         <div class="cv-what">
-          <h4><span class="cv-org"><a href="https://www.linkedin.com/company/uniquesoft/" target="_blank">UniqueSoft</a> / ISS Ukraine</span> <span class="cv-role">&middot; Team Leader</span></h4>
+          <div class="cv-logo cv-logo-mono" aria-hidden="true">U</div>
+          <h4><span class="cv-org"><a href="https://www.linkedin.com/company/uniquesoft/" target="_blank">UniqueSoft</a> / ISS Ukraine</span> <span class="cv-role">&middot; R&amp;D Team Leader</span></h4>
           <div class="cv-place">Kyiv, Ukraine</div>
           <p>Delivered the first implementation of UniqueSoft&rsquo;s COBOL modernization software for major US logistics and financial infrastructure providers. Formed and led a team of up to 6 engineers.</p>
         </div>
@@ -868,6 +889,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Apr 2012 &ndash; Jul 2013</div>
         <div class="cv-what">
+          <div class="cv-logo"><img src="images/logos/globallogic.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org"><a href="https://www.globallogic.com/" target="_blank">GlobalLogic</a></span> <span class="cv-role">&middot; Backend Engineer</span></h4>
           <div class="cv-place">Kyiv, Ukraine</div>
           <p>Contributed to telecom and banking projects after completing a software architecture and system design training program.</p>
