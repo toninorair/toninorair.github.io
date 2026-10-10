@@ -317,6 +317,15 @@ nav {
   transition: text-decoration-color .2s;
 }
 .cv-what a:hover { text-decoration-color: currentColor; }
+/* Earlier roles in Ukraine: compact, after a divider */
+.cv-divider { height: 1px; background: var(--border); margin: 8px 0 24px; }
+.cv-item-compact { margin-bottom: 16px; }
+.cv-item-compact .cv-when { font-size: 12px; padding-top: 1px; }
+.cv-item-compact .cv-logo { width: 26px; height: 26px; left: -49px; border-radius: 7px; }
+.cv-item-compact .cv-what h4 { font-size: 14.5px; line-height: 1.4; }
+.cv-item-compact .cv-place { font-size: 12px; }
+.cv-item-compact .cv-what p, .cv-item-compact .cv-what li { font-size: 13.5px; line-height: 1.6; }
+.cv-item-compact .cv-what p { margin-top: 4px; }
 @media (max-width: 700px) {
   .cv-item { grid-template-columns: 1fr; gap: 4px; }
   .cv-what:has(.cv-logo) { padding-left: 48px; }
@@ -870,7 +879,8 @@ An<span class="b">toni</span>na Norair
           <p>Implemented BTC-to-ETH atomic swaps for the Bosonic Network, a cross-custodian settlement platform for real-time netting, clearing, and atomic payment-versus-payment settlement that removes counterparty credit and settlement risk.</p>
         </div>
       </div>
-      <div class="cv-item">
+      <div class="cv-divider" role="separator"></div>
+      <div class="cv-item cv-item-compact">
         <div class="cv-when">Jan 2016 &ndash; Mar 2017</div>
         <div class="cv-what">
           <div class="cv-logo"><img src="images/logos/sourcegraph.png" alt="" loading="lazy"></div>
@@ -879,7 +889,7 @@ An<span class="b">toni</span>na Norair
           <p>Implemented core components of Sourcegraph&rsquo;s code analysis engine, which powered cross-repository go-to-definition, find-references, and semantic code navigation.</p>
         </div>
       </div>
-      <div class="cv-item">
+      <div class="cv-item cv-item-compact">
         <div class="cv-when">Jul 2013 &ndash; Jan 2016</div>
         <div class="cv-what">
           <div class="cv-logo"><img src="images/logos/uniquesoft.png" alt="" loading="lazy"></div>
@@ -888,7 +898,7 @@ An<span class="b">toni</span>na Norair
           <p>Delivered the first implementation of UniqueSoft&rsquo;s COBOL modernization software for major US logistics and financial infrastructure providers. Formed and led a team of up to 6 engineers.</p>
         </div>
       </div>
-      <div class="cv-item">
+      <div class="cv-item cv-item-compact">
         <div class="cv-when">Apr 2012 &ndash; Jul 2013</div>
         <div class="cv-what">
           <div class="cv-logo"><img src="images/logos/globallogic.png" alt="" loading="lazy"></div>
@@ -897,8 +907,7 @@ An<span class="b">toni</span>na Norair
           <p>Contributed to telecom and banking projects after completing a software architecture and system design training program.</p>
         </div>
       </div>
-    </div>
-      <div class="cv-item">
+      <div class="cv-item cv-item-compact">
         <div class="cv-when">Jan 2010 &ndash; Apr 2012</div>
         <div class="cv-what">
           <div class="cv-logo"><img src="images/logos/uniquesoft.png" alt="" loading="lazy"></div>
@@ -907,6 +916,7 @@ An<span class="b">toni</span>na Norair
           <p>First job, combined with university studies. Programmed compilers in functional languages such as Lisp and Haskell.</p>
         </div>
       </div>
+    </div>
 
     <div class="cv-block">
       <h3 class="cv-label">Education</h3>
