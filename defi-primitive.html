@@ -110,6 +110,9 @@ nav {
 }
 .content a { text-decoration: underline; text-underline-offset: 3px; }
 
+/* Blend white image backgrounds into the page color */
+.article-wrap img { mix-blend-mode: multiply; }
+
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
   .article-wrap { padding: 40px 20px 80px; }
@@ -132,7 +135,7 @@ nav {
     <p>Simple is way more than simplistic. Many white papers in the DeFi space seem to be written more to impress than to educate. Curious readers often find themselves lost in a sea of advanced mathematical formulas filled with Greek symbols. Instead of gaining clarity, they leave the experience feeling more confused and less confident than when they began. Fortunately, the reality of building protocols is often different. It is based on a few fundamentally simple &mdash; though not simplistic &mdash; algorithms. These DeFi primitives power multi-billion-dollar protocols and have become essential tools in the DeFi engineer&rsquo;s toolkit.</p>
 
     <figure style="margin:32px auto; max-width:520px">
-      <img src="images/defi-primitive/image1.png" alt="Attitude towards algo, eng, and life: simplistic, complex, simple" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/defi-primitive/image1.png" alt="Attitude towards algo, eng, and life: simplistic, complex, simple" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2>A Billion-Dollar Algorithm</h2>
@@ -151,13 +154,13 @@ nav {
     <p>A simplified version of the algorithm where a user is allowed to deposit and withdraw only once.</p>
 
     <figure style="margin:32px auto; max-width:820px">
-      <img src="images/defi-primitive/image2.jpeg" alt="One deposit, one withdrawal - simplified reward distribution algorithm" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/defi-primitive/image2.jpeg" alt="One deposit, one withdrawal - simplified reward distribution algorithm" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>A more practical version allows users to deposit and withdraw multiple times. Rewards are calculated and distributed before any changes are made to the eligible reward amount (i.e., before each deposit or withdrawal).</p>
 
     <figure style="margin:32px auto; max-width:820px">
-      <img src="images/defi-primitive/image3.jpeg" alt="Multiple deposits, multiple withdrawals - practical reward distribution algorithm" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/defi-primitive/image3.jpeg" alt="Multiple deposits, multiple withdrawals - practical reward distribution algorithm" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2>History of Adoption</h2>

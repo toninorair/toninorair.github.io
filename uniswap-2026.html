@@ -111,6 +111,9 @@ nav {
   margin: 16px 0;
 }
 
+/* Blend white image backgrounds into the page color */
+.article-wrap img { mix-blend-mode: multiply; }
+
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
   .article-wrap { padding: 40px 20px 80px; }
@@ -149,7 +152,7 @@ nav {
     <h3>How Does It Actually Work?</h3>
 
     <figure style="margin:32px 0">
-      <img src="images/uniswap-2026/image1.jpeg" alt="UniswapX BUIDL/USDC swap flow" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/uniswap-2026/image1.jpeg" alt="UniswapX BUIDL/USDC swap flow" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p><strong>(1) &rarr; (2):</strong> The BUIDL holder requests a quote for a BUIDL &rarr; USDC swap; the Uniswap API runs an RFQ (Request for Quote) auction among allowlisted market makers &mdash; Wintermute, Flowdesk, Tokka Labs.</p>
@@ -163,7 +166,7 @@ nav {
     <p>All traces of onchain activity hint at limited use so far. Most transactions were minor and executed in Feb 2026. As institutional flows and appetite grow, the number of assets tradable via Uniswap&rsquo;s intent-based UniswapX system may grow too.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/uniswap-2026/image2.jpeg" alt="UniswapX BUIDL swap onchain activity" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/uniswap-2026/image2.jpeg" alt="UniswapX BUIDL swap onchain activity" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">
         <a href="https://etherscan.io/tx/0x14de4ef09e16c7c5e5097575e209f41f37c76726c2409be958ab62aa2044d5fe" target="_blank" style="text-decoration:underline;text-underline-offset:3px">View transaction on Etherscan &nearr;</a>
       </figcaption>
@@ -186,7 +189,7 @@ nav {
     <h3>How Does It Actually Work?</h3>
 
     <figure style="margin:32px 0">
-      <img src="images/uniswap-2026/image3.jpeg" alt="DualPool hook swap flow" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/uniswap-2026/image3.jpeg" alt="DualPool hook swap flow" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p><strong>(1) &rarr; (2):</strong> The swapper submits an ordinary v4 swap to the PoolManager, which triggers the hook&rsquo;s beforeSwap callback before any swap math runs.</p>
@@ -202,7 +205,7 @@ nav {
     <p>So far Spark has reallocated $150M into common Uniswap v4 pools with no DualPool hooks or Vault liquidity allocation enabled. Keeping an eye on the transition to the next stage given that the DualPool announcement is very recent (end of July).</p>
 
     <figure style="margin:32px 0">
-      <img src="images/uniswap-2026/image4.jpeg" alt="Spark liquidity reallocation into Uniswap v4 pools" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/uniswap-2026/image4.jpeg" alt="Spark liquidity reallocation into Uniswap v4 pools" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <hr>
@@ -220,7 +223,7 @@ nav {
     <h3>How Does It Actually Work?</h3>
 
     <figure style="margin:32px 0">
-      <img src="images/uniswap-2026/image5.jpeg" alt="Permissioned Pools architecture" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/uniswap-2026/image5.jpeg" alt="Permissioned Pools architecture" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>The Uniswap Permissioned Pools architecture consists of four components:</p>

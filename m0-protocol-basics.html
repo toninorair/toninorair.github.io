@@ -122,6 +122,9 @@ nav {
 }
 .content a { text-decoration: underline; text-underline-offset: 3px; }
 
+/* Blend white image backgrounds into the page color */
+.article-wrap img { mix-blend-mode: multiply; }
+
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
   .article-wrap { padding: 40px 20px 80px; }
@@ -226,7 +229,7 @@ secondsSinceLastAccrual = t1 - t0</code></pre>
     <p>We clearly need a solution to this issue. Complexity cannot be solved by adding more complexity, so it&rsquo;s time to return to fundamentals. When examining the interest rate formulas below, a common element emerges across them. Can you identify it?</p>
 
     <figure style="margin:32px auto; max-width:70%">
-      <img src="images/m0-protocol-basics/image3.png" alt="Formulas for Simple, Compound, and Continuously Compounded Interest" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-protocol-basics/image3.png" alt="Formulas for Simple, Compound, and Continuously Compounded Interest" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption><a href="https://www.onlinemathlearning.com/simple-interest-formula.html" target="_blank">Formulas</a> for Simple Interest, Compound Interest, and Continuously Compounded Interest</figcaption>
     </figure>
 

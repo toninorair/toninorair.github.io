@@ -14,20 +14,39 @@
   --serif: 'Lora', Georgia, 'Times New Roman', serif;
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
-  --bg: #fafafa;
-  --border: rgba(0,0,0,0.08);
-  --border-h: rgba(0,0,0,0.14);
-  --text: #111;
-  --text-2: #555;
-  --text-3: #999;
-  --text-4: #bbb;
+  --bg: #f6f8fb;
+  --nav-bg: rgba(246,248,251,0.85);
+  --border: rgba(20,40,70,0.09);
+  --border-h: rgba(20,40,70,0.16);
+  --text: #14202e;
+  --text-2: #4a5d72;
+  --text-3: #8a9bb0;
+  --text-4: #b8c4d3;
+  --accent: #2f5d8a;
+  --accent-soft: rgba(47,93,138,0.10);
+  --thumb-bg: #e4ebf3;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1622;
+    --nav-bg: rgba(14,22,34,0.85);
+    --border: rgba(160,190,225,0.12);
+    --border-h: rgba(160,190,225,0.22);
+    --text: #e6edf5;
+    --text-2: #a9b8c9;
+    --text-3: #71849a;
+    --text-4: #4a5b70;
+    --accent: #7fb0e0;
+    --accent-soft: rgba(127,176,224,0.12);
+    --thumb-bg: #182436;
+  }
 }
 
 html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 a { color: var(--text); text-decoration: none; transition: color 0.3s; }
-a:hover { color: #000; }
-::selection { background: rgba(0,0,0,0.08); }
+a:hover { color: var(--accent); }
+::selection { background: var(--accent-soft); }
 
 /* Nav */
 nav {
@@ -35,12 +54,13 @@ nav {
   padding: 0 40px; height: 56px;
   display: flex; align-items: center; justify-content: space-between;
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  background: rgba(250,250,250,0.85);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
 }
 .nav-links { display: flex; gap: 28px; list-style: none; flex-wrap: nowrap; align-items: center; }
 .nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
-.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--accent); }
 .nav-socials { display: flex; gap: 16px; align-items: center; }
 .nav-socials a { color: var(--text-4); display: flex; align-items: center; transition: color 0.3s; }
 .nav-socials a:hover { color: var(--text); }
@@ -113,23 +133,122 @@ nav {
 /* Hourglass */
 .hourglass-svg { width: 260px; height: 440px; }
 
-@keyframes drainTop {
-  0% { clip-path: inset(0 0 0 0); }
-  100% { clip-path: inset(100% 0 0 0); }
+/* 30s cycle: sand runs 0–84%, glass lifts and flips 84–100%.
+   Mid-flip (glass horizontal) the sand state swaps and the rotation jumps
+   90deg -> -90deg; the frame is symmetric, so the swap is invisible. */
+/* Sand surfaces are masks that slide: the top mask has a crater (V dip)
+   that sinks toward the neck; the bottom mask is a cone whose apex rises
+   with the pile. Mid-flip both reset while the glass is horizontal. */
+@keyframes surfaceTop {
+  0%     { transform: translateY(40px); animation-timing-function: cubic-bezier(.45,0,.85,.6); }
+  84%    { transform: translateY(265px); }
+  87.5%  { transform: translateY(265px); }
+  87.51% { transform: translateY(40px); }
+  100%   { transform: translateY(40px); }
 }
-@keyframes fillBottom {
-  0% { clip-path: inset(100% 0 0 0); }
-  100% { clip-path: inset(0 0 0 0); }
+@keyframes pileApex {
+  0%     { transform: translateY(410px); animation-timing-function: cubic-bezier(.3,.6,.5,1); }
+  84%    { transform: translateY(282px); }
+  87.5%  { transform: translateY(282px); }
+  87.51% { transform: translateY(410px); }
+  100%   { transform: translateY(410px); }
 }
-@keyframes stream {
-  0%,5% { opacity: 0; }
-  8% { opacity: 1; }
-  92% { opacity: 1; }
-  96%,100% { opacity: 0; }
+@keyframes splashVis {
+  0%, 1%   { opacity: 0; }
+  3%, 82%  { opacity: 1; }
+  84%, 100% { opacity: 0; }
 }
-.sand-drain { animation: drainTop 24s ease-in infinite; }
-.sand-fill { animation: fillBottom 24s ease-out infinite; }
-.sand-stream { animation: stream 24s linear infinite; }
+@keyframes hopL {
+  0%   { transform: translate(0,0); opacity: 0; }
+  20%  { opacity: 1; }
+  50%  { transform: translate(-4px,-3px); }
+  100% { transform: translate(-8px,3px); opacity: 0; }
+}
+@keyframes hopR {
+  0%   { transform: translate(0,0); opacity: 0; }
+  20%  { opacity: 1; }
+  50%  { transform: translate(3px,-2.5px); }
+  100% { transform: translate(7px,3px); opacity: 0; }
+}
+/* Stream shortens as the pile rises (bbox 228–408, pile top 408 -> 282) */
+@keyframes streamLen {
+  0%   { clip-path: inset(0 0 0 0); opacity: 0; animation-timing-function: cubic-bezier(.3,.6,.5,1); }
+  1%   { opacity: 1; }
+  83%  { opacity: 1; }
+  84%  { clip-path: inset(0 0 70% 0); opacity: 0; }
+  100% { clip-path: inset(0 0 70% 0); opacity: 0; }
+}
+/* Lift, turn and set down in one 1.8s motion: easeInOutCubic turn while the
+   glass shrinks just enough (down to ~.55, never pulsing back mid-turn) for the
+   ~416-long body to stay inside the 260-wide frame at every angle.
+   Generated keyframes, linear between. */
+@keyframes flip {
+  0%, 84.5% { transform: rotate(0deg) scale(1); }
+  84.70% { transform: rotate(0.03deg) scale(0.999); }
+  84.90% { transform: rotate(0.21deg) scale(0.999); }
+  85.10% { transform: rotate(0.72deg) scale(0.999); }
+  85.30% { transform: rotate(1.71deg) scale(0.998); }
+  85.50% { transform: rotate(3.33deg) scale(0.995); }
+  85.70% { transform: rotate(5.76deg) scale(0.986); }
+  85.90% { transform: rotate(9.15deg) scale(0.957); }
+  86.10% { transform: rotate(13.65deg) scale(0.894); }
+  86.30% { transform: rotate(19.44deg) scale(0.806); }
+  86.50% { transform: rotate(26.67deg) scale(0.718); }
+  86.70% { transform: rotate(35.49deg) scale(0.643); }
+  86.90% { transform: rotate(46.08deg) scale(0.587); }
+  87.10% { transform: rotate(58.59deg) scale(0.555); }
+  87.30% { transform: rotate(73.17deg) scale(0.552); }
+  87.50% { transform: rotate(90.00deg) scale(0.552); }
+  87.51% { transform: rotate(-90deg) scale(0.552); }
+  87.70% { transform: rotate(-73.17deg) scale(0.552); }
+  87.90% { transform: rotate(-58.59deg) scale(0.555); }
+  88.10% { transform: rotate(-46.08deg) scale(0.587); }
+  88.30% { transform: rotate(-35.49deg) scale(0.643); }
+  88.50% { transform: rotate(-26.67deg) scale(0.718); }
+  88.70% { transform: rotate(-19.44deg) scale(0.806); }
+  88.90% { transform: rotate(-13.65deg) scale(0.894); }
+  89.10% { transform: rotate(-9.15deg) scale(0.957); }
+  89.30% { transform: rotate(-5.76deg) scale(0.986); }
+  89.50% { transform: rotate(-3.33deg) scale(0.995); }
+  89.70% { transform: rotate(-1.71deg) scale(0.998); }
+  89.90% { transform: rotate(-0.72deg) scale(0.999); }
+  90.10% { transform: rotate(-0.21deg) scale(0.999); }
+  90.30% { transform: rotate(-0.03deg) scale(0.999); }
+  90.5%, 100% { transform: rotate(0deg) scale(1); }
+}
+@keyframes shadowLift {
+  0%, 84.5% { opacity: 0.12; }
+  87.5% { opacity: 0.03; }
+  90.5%, 100% { opacity: 0.12; }
+}
+.hg-shadow { animation: shadowLift 30s infinite; }
+@keyframes grain {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translateY(176px); opacity: 0.9; }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.85; }
+}
+.hg-body { transform-box: view-box; transform-origin: 130px 230px; animation: flip 30s linear infinite; }
+.m-top, .m-pile, .pile-apex { transform-box: view-box; transform-origin: 0 0; }
+.m-top { animation: surfaceTop 30s infinite; }
+.m-pile, .pile-apex { animation: pileApex 30s infinite; }
+.splash { animation: splashVis 30s linear infinite; }
+.hop-l { animation: hopL 0.7s ease-out infinite; }
+.hop-r { animation: hopR 0.8s ease-out infinite; }
+.sand-stream { animation: streamLen 30s infinite; }
+.grain { animation: grain 0.55s linear infinite; }
+.glass-glint { animation: shimmer 6s ease-in-out infinite; }
+@media (prefers-color-scheme: dark) { .glass-glint path { stroke: #9fbcd9; stroke-opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) {
+  .hg-body, .hg-shadow, .m-top, .m-pile, .pile-apex, .splash, .hop-l, .hop-r, .sand-stream, .grain, .glass-glint { animation: none; }
+  .m-top { transform: translateY(150px); }
+  .m-pile, .pile-apex { transform: translateY(345px); }
+  .sand-stream { clip-path: inset(0 0 35% 0); }
+  .grain, .splash { display: none; }
+}
 
 /* Divider */
 .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-h), transparent); }
@@ -146,7 +265,7 @@ nav {
   padding: 8px 0; transition: all 0.3s; white-space: nowrap;
 }
 .section-tab:hover { color: var(--text); }
-.section-tab.active { color: var(--text); border-bottom-color: var(--text); }
+.section-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 .section-panel { display: none; }
 .section-panel.active { display: block; }
@@ -159,6 +278,36 @@ nav {
   font-weight: 500; color: var(--text); margin-bottom: 8px;
 }
 .research-head p { font-size: 15px; color: var(--text-2); }
+
+/* CV */
+.cv-block { margin-bottom: 56px; }
+.cv-label {
+  font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-3);
+  padding-bottom: 12px; margin-bottom: 28px; border-bottom: 1px solid var(--border);
+}
+.cv-item { display: grid; grid-template-columns: 170px 1fr; gap: 32px; margin-bottom: 30px; }
+.cv-when {
+  font-family: var(--sans); font-size: 13px; color: var(--text-3);
+  font-variant-numeric: tabular-nums; padding-top: 2px; white-space: nowrap;
+}
+.cv-what { max-width: 720px; }
+.cv-what h4 {
+  font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--text);
+  letter-spacing: -0.011em; line-height: 1.45;
+}
+.cv-role { font-weight: 400; color: var(--text-2); }
+.cv-place { font-size: 13px; color: var(--text-3); margin-top: 1px; }
+.cv-what p, .cv-what li { font-size: 14.5px; color: var(--text-2); line-height: 1.7; letter-spacing: -0.003em; }
+.cv-what p { margin-top: 8px; }
+.cv-what ul { margin-top: 8px; padding-left: 0; list-style: none; }
+.cv-what li { position: relative; padding-left: 16px; margin-bottom: 5px; }
+.cv-what li::before { content: "\2013"; position: absolute; left: 0; color: var(--text-4); }
+.cv-what a { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+.cv-what a:hover { color: var(--accent); text-decoration-color: currentColor; }
+@media (max-width: 700px) {
+  .cv-item { grid-template-columns: 1fr; gap: 4px; }
+}
 
 /* Placeholder page */
 .placeholder {
@@ -190,11 +339,41 @@ nav {
 .about-back:hover { color: var(--text); }
 
 .article {
-  padding: 32px 0; border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: background 0.3s;
+  position: relative;
+  display: grid; grid-template-columns: 1fr 200px; gap: 32px; align-items: center;
+  padding: 32px 0 32px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: padding-left 0.35s ease, background 0.35s ease;
 }
 .article:first-child { border-top: 1px solid var(--border); }
-.article:hover { background: linear-gradient(90deg, rgba(0,0,0,0.015), transparent 60%); }
+.article::before {
+  content: ''; position: absolute; left: 0; top: 32px; bottom: 32px; width: 2px;
+  background: var(--accent); transform: scaleY(0); transform-origin: top;
+  transition: transform 0.35s ease;
+}
+.article:hover { padding-left: 20px; background: linear-gradient(90deg, var(--accent-soft), transparent 70%); }
+.article:hover::before { transform: scaleY(1); }
+
+.article-thumb {
+  width: 200px; aspect-ratio: 5 / 3; border-radius: 8px; overflow: hidden;
+  background: var(--thumb-bg);
+}
+.article-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s ease;
+  }
+.article:hover .article-thumb img { transform: scale(1.06); }
+.article-thumb.ph {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--accent);
+  background: linear-gradient(135deg, var(--thumb-bg), var(--accent-soft));
+}
+
+@media (max-width: 700px) {
+  .article { grid-template-columns: 1fr; gap: 16px; }
+  .article-thumb { width: 100%; order: -1; }
+  .article:hover { padding-left: 0; }
+}
 
 .article-meta {
   display: flex; align-items: center; gap: 10px;
@@ -202,13 +381,20 @@ nav {
   margin-bottom: 10px;
 }
 .article-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-4); }
+.article-new {
+  display: inline-flex; align-items: center; gap: 6px; color: var(--accent);
+}
+.article-new::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
 
 .article-title {
   font-family: var(--serif); font-size: 24px; font-weight: 500;
   color: var(--text); line-height: 1.3; margin-bottom: 8px;
   transition: color 0.3s;
 }
-.article:hover .article-title { color: #333; }
+.article:hover .article-title { color: var(--accent); }
 
 .article-summary {
   font-size: 14px; color: var(--text-2); line-height: 1.7;
@@ -216,11 +402,13 @@ nav {
 }
 
 .article-link {
-  font-family: var(--mono); font-size: 13px; color: var(--text);
+  font-family: var(--mono); font-size: 13px; color: var(--accent);
   text-decoration: underline; text-underline-offset: 4px;
   text-decoration-color: var(--text-4); transition: text-decoration-color 0.3s;
 }
-.article:hover .article-link { text-decoration-color: var(--text); }
+.article-link::after { content: ' \2192'; display: inline-block; transition: transform 0.3s ease; }
+.article:hover .article-link { text-decoration-color: var(--accent); }
+.article:hover .article-link::after { transform: translateX(4px); }
 
 /* Footer */
 footer {
@@ -239,6 +427,11 @@ footer {
 /* Scroll fade */
 .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+.article.fade-in { transition: opacity 0.6s ease, transform 0.6s ease, padding-left 0.35s ease, background 0.35s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  .article, .article::before, .article-thumb img, .article-link::after { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -250,9 +443,10 @@ footer {
     <a href="javascript:void(0)" onclick="goTab('writes')">Writes</a>
     <a href="javascript:void(0)" onclick="goTab('reads')">Reads</a>
     <a href="javascript:void(0)" onclick="goTab('life')">Life <span style="color:#e74c3c;font-size:16px">&#9829;</span></a>
+    <a href="javascript:void(0)" onclick="goTab('cv')">CV</a>
   </div>
   <div class="nav-socials">
-    <a href="https://x.com/0xt0n1" target="_blank" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="https://x.com/0xtoninorair" target="_blank" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
     <a href="https://www.linkedin.com/in/antoninanorair/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
   </div>
 </nav>
@@ -279,6 +473,44 @@ An<span class="b">toni</span>na Norair
       </div>
       <div class="timer-wrap">
         <svg class="hourglass-svg" viewBox="0 0 260 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Engraving-style stipple for sand -->
+            <pattern id="stipple" width="5" height="5" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1.2" r="0.55" fill="#506a82"/>
+              <circle cx="3.6" cy="3.4" r="0.45" fill="#506a82"/>
+              <circle cx="3.2" cy="0.6" r="0.3" fill="#506a82"/>
+            </pattern>
+            <pattern id="stipple-dense" width="3" height="3" patternUnits="userSpaceOnUse">
+              <circle cx="0.8" cy="0.8" r="0.5" fill="#506a82"/>
+              <circle cx="2.3" cy="2.2" r="0.45" fill="#506a82"/>
+            </pattern>
+            <!-- Glass thickness: darker toward the walls -->
+            <radialGradient id="glass-tint" cx="50%" cy="50%" r="55%">
+              <stop offset="60%" stop-color="#506a82" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#506a82" stop-opacity="0.09"/>
+            </radialGradient>
+            <linearGradient id="sand-shade" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#506a82" stop-opacity="0.26"/>
+              <stop offset="0.45" stop-color="#506a82" stop-opacity="0.12"/>
+              <stop offset="1" stop-color="#506a82" stop-opacity="0.22"/>
+            </linearGradient>
+            <mask id="mask-top" maskUnits="userSpaceOnUse" x="0" y="0" width="260" height="460">
+              <!-- Region below a crater line; apex of the V at (130,0) before translate -->
+              <path class="m-top" d="M-80 -60 C20 -40, 110 -10, 130 0 C150 -10, 240 -40, 340 -60 V600 H-80 Z" fill="#fff"/>
+            </mask>
+            <mask id="mask-pile" maskUnits="userSpaceOnUse" x="0" y="0" width="260" height="460">
+              <!-- Cone: apex at (130,0) before translate, angle of repose ~33deg -->
+              <path class="m-pile" d="M130 0 C150 12, 220 52, 340 128 V600 H-80 V128 C40 52, 110 12, 130 0 Z" fill="#fff"/>
+            </mask>
+            <filter id="soft-shadow" x="-20%" y="-200%" width="140%" height="500%">
+              <feGaussianBlur stdDeviation="4"/>
+            </filter>
+          </defs>
+
+          <!-- Ground shadow (stays put while the glass flips) -->
+          <ellipse class="hg-shadow" cx="130" cy="446" rx="84" ry="6" fill="#14202e" opacity="0.12" filter="url(#soft-shadow)"/>
+
+          <g class="hg-body">
           <!-- Ink: dusty steel-blue matching the vintage engraving -->
           <!-- c = #506a82 main strokes, lighter for hatching -->
 
@@ -349,6 +581,10 @@ An<span class="b">toni</span>na Norair
           <ellipse cx="194" cy="402" rx="5" ry="3.5" stroke="#506a82" stroke-width="1" fill="none"/>
           <ellipse cx="194" cy="406" rx="3.5" ry="2" stroke="#506a82" stroke-width="0.7" fill="none"/>
 
+          <!-- Glass body tint -->
+          <path d="M80 48 C55 60, 48 120, 52 160 C56 200, 90 222, 125 230 L135 230 C170 222, 204 200, 208 160 C212 120, 205 60, 180 48 Z" fill="url(#glass-tint)"/>
+          <path d="M80 412 C55 400, 48 340, 52 300 C56 260, 90 238, 125 230 L135 230 C170 238, 204 260, 208 300 C212 340, 205 400, 180 412 Z" fill="url(#glass-tint)"/>
+
           <!-- ════════ GLASS — TOP BULB (very round/spherical) ════════ -->
           <!-- Left wall: starts at pedestal, bows out wide, curves in tightly to neck -->
           <path d="M80 48 C55 60, 48 120, 52 160 C56 200, 90 222, 125 230"
@@ -370,7 +606,12 @@ An<span class="b">toni</span>na Norair
           <line x1="75" y1="68" x2="64" y2="118" stroke="#506a82" stroke-width="0.35" opacity="0.17"/>
           <line x1="78" y1="65" x2="68" y2="110" stroke="#506a82" stroke-width="0.35" opacity="0.14"/>
           <!-- Right side reflection rectangle -->
-          <rect x="170" y="78" width="9" height="15" rx="1" stroke="#506a82" stroke-width="0.8" fill="none" opacity="0.28"/>
+          <g class="glass-glint">
+            <path d="M74 78 C64 100, 62 128, 66 152" stroke="#fff" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+            <path d="M74 382 C64 360, 62 332, 66 308" stroke="#fff" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+            <path d="M190 92 C195 108, 196 122, 194 136" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <path d="M190 368 C195 352, 196 338, 194 324" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          </g>
           <!-- Inner glass curve accents -->
           <path d="M88 90 C82 110, 78 135, 80 150" stroke="#506a82" stroke-width="0.35" fill="none" opacity="0.14"/>
           <path d="M172 90 C178 110, 182 135, 180 150" stroke="#506a82" stroke-width="0.35" fill="none" opacity="0.11"/>
@@ -383,40 +624,53 @@ An<span class="b">toni</span>na Norair
           <path d="M88 370 C82 350, 78 325, 80 310" stroke="#506a82" stroke-width="0.35" fill="none" opacity="0.14"/>
           <path d="M172 370 C178 350, 182 325, 180 310" stroke="#506a82" stroke-width="0.35" fill="none" opacity="0.11"/>
 
-          <!-- ════════ SAND — top (draining, concave funnel shape) ════════ -->
-          <g class="sand-drain">
-            <!-- Sand mass with concave surface dipping to neck -->
+          <!-- ════════ SAND — top (draining) ════════ -->
+          <g class="sand-drain" mask="url(#mask-top)">
             <path d="M84 54 C62 62, 54 115, 58 148 C60 170, 78 192, 100 210
                      L104 212 C112 218, 122 226, 130 230
                      C138 226, 148 218, 156 212 L160 210
-                     C182 192, 200 170, 202 148 C206 115, 198 62, 176 54 Z"
-                  fill="#506a82" opacity="0.1"/>
-            <!-- Sand diagonal slope line (concave surface) -->
-            <path d="M90 105 C100 115, 118 140, 130 175" stroke="#506a82" stroke-width="0.5" fill="none" opacity="0.12"/>
-            <path d="M170 105 C160 115, 142 140, 130 175" stroke="#506a82" stroke-width="0.4" fill="none" opacity="0.08"/>
-            <!-- Horizontal grain lines -->
-            <line x1="80" y1="80" x2="180" y2="80" stroke="#506a82" stroke-width="0.3" opacity="0.06"/>
-            <line x1="75" y1="100" x2="185" y2="100" stroke="#506a82" stroke-width="0.3" opacity="0.05"/>
-            <line x1="72" y1="120" x2="188" y2="120" stroke="#506a82" stroke-width="0.3" opacity="0.04"/>
+                     C182 192, 200 170, 202 148 C206 115, 198 62, 176 54 Z" fill="url(#sand-shade)"/>
+            <path d="M84 54 C62 62, 54 115, 58 148 C60 170, 78 192, 100 210
+                     L104 212 C112 218, 122 226, 130 230
+                     C138 226, 148 218, 156 212 L160 210
+                     C182 192, 200 170, 202 148 C206 115, 198 62, 176 54 Z" fill="url(#stipple)" opacity="0.35"/>
+            <!-- Funnel dimple: denser stipple where sand pours into the neck -->
+            <path d="M112 214 C120 220, 126 226, 130 230 C134 226, 140 220, 148 214 C140 208, 120 208, 112 214 Z" fill="url(#stipple-dense)" opacity="0.4"/>
+            <path d="M90 105 C100 115, 118 140, 130 175" stroke="#506a82" stroke-width="0.5" fill="none" opacity="0.14"/>
+            <path d="M170 105 C160 115, 142 140, 130 175" stroke="#506a82" stroke-width="0.4" fill="none" opacity="0.1"/>
           </g>
 
           <!-- ════════ SAND STREAM ════════ -->
           <g class="sand-stream">
-            <line x1="130" y1="226" x2="130" y2="236" stroke="#506a82" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+            <rect x="126" y="228" width="8" height="180" fill="none"/>
+            <line x1="130" y1="228" x2="130" y2="408" stroke="#506a82" stroke-width="1.1" opacity="0.35"/>
+            <line x1="130.6" y1="228" x2="130.6" y2="408" stroke="#506a82" stroke-width="0.4" opacity="0.25" stroke-dasharray="1 3"/>
+            <circle class="grain" cx="129.2" cy="232" r="0.8" fill="#506a82" style="animation-delay:0s"/>
+            <circle class="grain" cx="130.8" cy="232" r="0.7" fill="#506a82" style="animation-delay:-0.11s"/>
+            <circle class="grain" cx="129.6" cy="232" r="0.9" fill="#506a82" style="animation-delay:-0.22s"/>
+            <circle class="grain" cx="130.4" cy="232" r="0.6" fill="#506a82" style="animation-delay:-0.33s"/>
+            <circle class="grain" cx="130"   cy="232" r="0.8" fill="#506a82" style="animation-delay:-0.44s"/>
           </g>
 
-          <!-- ════════ SAND — bottom (triangular mound) ════════ -->
-          <g class="sand-fill">
-            <!-- Mound shape: flat bottom, triangular peak pointing up -->
-            <path d="M78 408 C68 408, 60 380, 64 355 C68 335, 100 305, 130 280
-                     C160 305, 192 335, 196 355 C200 380, 192 408, 182 408 Z"
-                  fill="#506a82" opacity="0.13"/>
-            <!-- Mound surface line -->
-            <path d="M80 380 C95 355, 115 325, 130 305 C145 325, 165 355, 180 380"
-                  stroke="#506a82" stroke-width="0.5" fill="none" opacity="0.1"/>
-            <!-- Grain -->
-            <line x1="82" y1="395" x2="178" y2="395" stroke="#506a82" stroke-width="0.3" opacity="0.05"/>
-            <line x1="78" y1="405" x2="182" y2="405" stroke="#506a82" stroke-width="0.3" opacity="0.04"/>
+          <!-- Splash at the pile apex -->
+          <g class="pile-apex">
+            <g class="splash">
+              <circle class="hop-l" cx="129" cy="-1" r="0.7" fill="#506a82"/>
+              <circle class="hop-r" cx="131" cy="-1" r="0.6" fill="#506a82"/>
+              <circle class="hop-l" cx="130" cy="-1" r="0.5" fill="#506a82" style="animation-delay:-0.35s"/>
+              <circle class="hop-r" cx="130" cy="-1" r="0.55" fill="#506a82" style="animation-delay:-0.4s"/>
+            </g>
+          </g>
+
+          <!-- ════════ SAND — bottom (pile) ════════ -->
+          <g class="sand-fill" mask="url(#mask-pile)">
+            <path d="M78 408 C68 408, 60 380, 64 355 C68 335, 100 305, 130 282
+                     C160 305, 192 335, 196 355 C200 380, 192 408, 182 408 Z" fill="url(#sand-shade)"/>
+            <path d="M78 408 C68 408, 60 380, 64 355 C68 335, 100 305, 130 282
+                     C160 305, 192 335, 196 355 C200 380, 192 408, 182 408 Z" fill="url(#stipple)" opacity="0.4"/>
+            <path d="M80 380 C95 355, 115 325, 130 305 C145 325, 165 355, 180 380" stroke="#506a82" stroke-width="0.5" fill="none" opacity="0.14"/>
+            <path d="M84 398 C100 380, 118 362, 130 352 C142 362, 160 380, 176 398" stroke="#506a82" stroke-width="0.4" fill="none" opacity="0.1"/>
+          </g>
           </g>
         </svg>
       </div>
@@ -433,26 +687,33 @@ An<span class="b">toni</span>na Norair
     <button class="section-tab active" data-tab="writes" onclick="switchTab('writes')">Writes</button>
     <button class="section-tab" data-tab="reads" onclick="switchTab('reads')">Reads</button>
     <button class="section-tab" data-tab="life" onclick="switchTab('life')">Life <span style="color:#e74c3c;font-size:14px">&#9829;</span></button>
+    <button class="section-tab" data-tab="cv" onclick="switchTab('cv')">CV</button>
   </div>
 </div>
 
 <!-- Writes panel -->
 <div class="wrap section-panel active" id="writes">
-  <section class="research fade-in">
+  <section class="research">
     <div class="article-list">
 
-      <article class="article" onclick="window.location='pyusdx.html'">
+      <article class="article fade-in" onclick="window.location='pyusdx.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>Sep 21, 2026</time>
           <span class="sep"></span>
           <span>⏳ 7 min</span>
+          <span class="sep"></span>
+          <span class="article-new">New</span>
         </div>
         <h3 class="article-title">PYUSDx Beyond the Launch: The Technical Design of the PYUSD Developer Platform</h3>
         <p class="article-summary">Inside the architecture of the first white-label stablecoin platform from M0, PayPal, and MoonPay — the PYUSDx base token and its per-earner reward accounting, MultiMint extensions and the Swap Facility, the solver-driven liquidity layer, and versioned beacon upgrades.</p>
         <a href="pyusdx.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/photo/pyusdx.svg" alt="" loading="lazy"></div>
       </article>
 
-      <article class="article" onclick="window.location='m0-year-in-extensions.html'">
+      <article class="article fade-in" onclick="window.location='m0-year-in-extensions.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>Aug 10, 2026</time>
           <span class="sep"></span>
@@ -461,9 +722,12 @@ An<span class="b">toni</span>na Norair
         <h3 class="article-title">Twenty Stablecoins: A Year of M0 Extensions</h3>
         <p class="article-summary">A newspaper-style review of twelve months of stablecoin extensions built on M0 — twenty digital dollars across eighteen chains, from MetaMask's wallet dollar to MoneyGram's remittance rail. TVL analytics, per-partner reporting, and money-flow diagrams, with supply figures read live from the M0 protocol API.</p>
         <a href="m0-year-in-extensions.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/m0-year-in-extensions.svg" alt="" loading="lazy"></div>
       </article>
 
-      <article class="article" onclick="window.location='uniswap-2026.html'">
+      <article class="article fade-in" onclick="window.location='uniswap-2026.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>Aug 6, 2026</time>
           <span class="sep"></span>
@@ -472,9 +736,12 @@ An<span class="b">toni</span>na Norair
         <h3 class="article-title">Uniswap in 2026: A Graceful Shift Toward an Institutional Future. The Story in Three Projects.</h3>
         <p class="article-summary">Change is the only constant, and the most adaptable survive and thrive. A review of Uniswap's shift toward an institutional future and the RWA space in three major 2026 projects — BUIDL swaps via UniswapX, the DualPool hook with Spark, and Permissioned Pools — and how they actually work.</p>
         <a href="uniswap-2026.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/photo/uniswap-2026.svg" alt="" loading="lazy"></div>
       </article>
 
-      <article class="article" onclick="window.location='m0-v1-core.html'">
+      <article class="article fade-in" onclick="window.location='m0-v1-core.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>May 26, 2026</time>
           <span class="sep"></span>
@@ -483,9 +750,12 @@ An<span class="b">toni</span>na Norair
         <h3 class="article-title">M0 V1</h3>
         <p class="article-summary">Two years in, M0 has processed over $1.1B in mints, expanded to Solana and 15+ EVM chains, and become the first white-labeled stablecoin platform. With JMI and new liquidity offerings on the horizon, going back to basics: how and why things were built the way they were.</p>
         <a href="m0-v1-core.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/photo/m0-v1.svg" alt="" loading="lazy"></div>
       </article>
 
-      <article class="article" onclick="window.location='defi-primitive.html'">
+      <article class="article fade-in" onclick="window.location='defi-primitive.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>Oct 15, 2024</time>
           <span class="sep"></span>
@@ -494,9 +764,12 @@ An<span class="b">toni</span>na Norair
         <h3 class="article-title">DeFi Primitive &mdash; Billion-Dollar Algorithm</h3>
         <p class="article-summary">Simple is way more than simplistic. The story of the algorithm behind staking rewards contracts everywhere — from the 2018 Scalable Reward Distribution whitepaper and SNX's Unipool to Uniswap v3 fee tracking, SushiSwap's MasterChef, and 1inch's ERC20Plugins.</p>
         <a href="defi-primitive.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/photo/defi-primitive.svg" alt="" loading="lazy"></div>
       </article>
 
-      <article class="article" onclick="window.location='m0-protocol-basics.html'">
+      <article class="article fade-in" onclick="window.location='m0-protocol-basics.html'">
+        <div class="article-body">
         <div class="article-meta">
           <time>Aug 28, 2024</time>
           <span class="sep"></span>
@@ -505,6 +778,8 @@ An<span class="b">toni</span>na Norair
         <h3 class="article-title">M0 Protocol Basics: Minter Rate, Global Interest Rate Index, and Key Principles</h3>
         <p class="article-summary">How the M0 Protocol tracks interest accrual on stablecoin issuance through two fundamental concepts: principal amounts and a global interest rate index. A shared index eliminates gas-intensive calculations across all protocol participants while maintaining precise balance tracking.</p>
         <a href="m0-protocol-basics.html" class="article-link">Read Article</a>
+      </div>
+        <div class="article-thumb"><img src="images/covers/photo/m0-protocol-basics.svg" alt="" loading="lazy"></div>
       </article>
 
     </div>
@@ -519,6 +794,111 @@ An<span class="b">toni</span>na Norair
 <!-- Life panel -->
 <div class="wrap section-panel" id="life">
   <div class="placeholder">In progress, TBD...</div>
+</div>
+
+<!-- CV panel -->
+<div class="wrap section-panel" id="cv">
+  <section class="research cv">
+    <div class="cv-block">
+      <h3 class="cv-label">Experience</h3>
+      <div class="cv-item">
+        <div class="cv-when">Mar 2023 &ndash; Oct 2026</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://www.m0.org/" target="_blank">M0</a></span> <span class="cv-role">&middot; CTO</span></h4>
+          <div class="cv-place">NYC, US</div>
+          <ul><li>Co-architected the M0 V1 core protocol, its governance module, and the Stablecoin Extension framework, the first of its kind in DeFi, which scaled to 18+ EVM chains, Solana, and Stellar and powered 20+ custom stablecoins at a $900M+ TVL peak.</li><li>Led the architecture and technical launch of M0&rsquo;s flagship stablecoin projects through its issuance and liquidity offerings, including <a href="https://www.m0.org/press-releases/metamask-becomes-first-self-custodial-wallet-to-introduce-its-native-stablecoin-in-partnership-with-bridge-and-m0" target="_blank">MetaMask USD</a> with ConsenSys, <a href="https://www.m0.org/press-releases/moneygram-launches-mgusd-a-stablecoin-to-power-its-own-global-network" target="_blank">MoneyGram&rsquo;s MGUSD</a>, and the <a href="https://www.m0.org/press-releases/moonpay-m0-and-paypal-announce-pyusdx-the-infrastructure-platform-for-pyusd-backed-stablecoins" target="_blank">PayPal PYUSDx Developer Platform</a>.</li><li>Onboarded major US stablecoin issuers, including <a href="https://www.bridge.xyz/" target="_blank">Bridge</a>, <a href="https://www.moonpay.com/" target="_blank">MoonPay</a>, and <a href="https://1money.com/" target="_blank">1Money</a>, onto the M0 platform.</li><li>Scaled the engineering organization from 0 to 16 engineers across four teams (Issuance, Liquidity, Integration, M0 Internal Issuer), sustaining 90%+ annual retention in a high-turnover industry.</li><li>Restructured the legacy M0 Issuer team and modernized its backend while maintaining full operational continuity.</li><li>Coordinated up to 50 audits spanning internal and external reviews, AI-assisted analysis, audit competitions, and formal verification.</li></ul>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">May 2024 &ndash; Present</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://fission.xyz/" target="_blank">Fission Labs</a></span> <span class="cv-role">&middot; Technical Advisor</span></h4>
+          
+          <ul><li>Partnered with the CTO of Fission Labs to define its set of onchain products and deliverables.</li><li>Onboarded external engineering contractors and ran AI-assisted reviews of their code.</li></ul>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Sep 2022 &ndash; Mar 2023</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://www.moonpay.com/" target="_blank">MoonPay</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
+          <div class="cv-place">Remote</div>
+          <p>Co-developed the backend for MoonPay&rsquo;s self-custodial wallet powering its NFT marketplace.</p>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Apr 2020 &ndash; Aug 2022</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://compound.finance/" target="_blank">Compound Labs</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
+          <div class="cv-place">San Francisco, US</div>
+          <ul><li>Co-designed and engineered Compound V3 (Comet), a lending protocol that reached $2.5B in peak TVL.</li><li>Contributed to Compound V2&rsquo;s Open Price Feed and the COMP governance token launch that kicked off DeFi Summer 2020.</li><li>Created Compound Autonomous Proposals (CAPs), a governance mechanism adopted by Compound and later by Uniswap to further decentralize protocol governance.</li></ul>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Jan 2018 &ndash; Mar 2020</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://consensys.io/" target="_blank">ConsenSys</a></span> <span class="cv-role">&middot; Senior Blockchain Engineer</span></h4>
+          <div class="cv-place">San Francisco, US</div>
+          <ul><li>Developed an Ethereum proof-of-concept with the Radiant Earth Foundation (on Kaleido and AWS) that tracks satellite-imagery licensing and payments on-chain, so NGOs can get geospatial data faster in disasters.</li><li>Contributed to an early real-world asset (RWA) tokenization platform.</li><li>Shipped CodeFi products, including CodeFi Activate and CodeFi Payments.</li></ul>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Jul 2017 &ndash; Jan 2018</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://www.linkedin.com/company/bosonic-digital/" target="_blank">Bosonic</a></span> <span class="cv-role">&middot; Blockchain Engineer</span></h4>
+          <div class="cv-place">San Francisco, US</div>
+          <p>Implemented BTC-to-ETH atomic swaps for the Bosonic Network, a cross-custodian settlement platform for real-time netting, clearing, and atomic payment-versus-payment settlement that removes counterparty credit and settlement risk.</p>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Jan 2016 &ndash; Mar 2017</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://sourcegraph.com/" target="_blank">Sourcegraph</a> / Tristero Consulting</span> <span class="cv-role">&middot; Senior Backend Engineer</span></h4>
+          <div class="cv-place">Kyiv, Ukraine</div>
+          <p>Implemented core components of Sourcegraph&rsquo;s code analysis engine, which powered cross-repository go-to-definition, find-references, and semantic code navigation.</p>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Jul 2013 &ndash; Jan 2016</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://www.linkedin.com/company/uniquesoft/" target="_blank">UniqueSoft</a> / ISS Ukraine</span> <span class="cv-role">&middot; Team Leader</span></h4>
+          <div class="cv-place">Kyiv, Ukraine</div>
+          <p>Delivered the first implementation of UniqueSoft&rsquo;s COBOL modernization software for major US logistics and financial infrastructure providers. Formed and led a team of up to 6 engineers.</p>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when">Apr 2012 &ndash; Jul 2013</div>
+        <div class="cv-what">
+          <h4><span class="cv-org"><a href="https://www.globallogic.com/" target="_blank">GlobalLogic</a></span> <span class="cv-role">&middot; Backend Engineer</span></h4>
+          <div class="cv-place">Kyiv, Ukraine</div>
+          <p>Contributed to telecom and banking software projects after completing an extensive software architecture and system design training program.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-block">
+      <h3 class="cv-label">Education</h3>
+      <div class="cv-item">
+        <div class="cv-when">Jun 2025 &ndash; Present</div>
+        <div class="cv-what">
+          <h4><span class="cv-org">Harvard Extension School</span> <span class="cv-role">&middot; Master&rsquo;s degree (ALM), Finance (in progress)</span></h4>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when"></div>
+        <div class="cv-what">
+          <h4><span class="cv-org">National Technical University of Ukraine &ldquo;Kyiv Polytechnic Institute&rdquo;</span> <span class="cv-role">&middot; Master&rsquo;s degree, Applied Mathematics</span></h4>
+          <div class="cv-place">Diploma with honors</div>
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-when"></div>
+        <div class="cv-what">
+          <h4><span class="cv-org">Polytechnic Lyceum of NTUU &ldquo;KPI&rdquo;</span> <span class="cv-role">&middot; Advanced mathematics, physics, and economics</span></h4>
+          <div class="cv-place">Sole silver medalist of the year in a cohort of nearly 200 students</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 </div><!-- /main-page -->
@@ -540,7 +920,7 @@ An<span class="b">toni</span>na Norair
 <footer>
   <div class="foot-copy"></div>
   <div class="foot-links">
-    <a href="https://x.com/0xt0n1" target="_blank" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="https://x.com/0xtoninorair" target="_blank" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
     <a href="https://www.linkedin.com/in/antoninanorair/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
   </div>
 </footer>
@@ -550,12 +930,17 @@ An<span class="b">toni</span>na Norair
 // Scroll fade-in
 (function(){
   var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el=e.target; el.classList.add('visible'); obs.unobserve(el);
+      if(el.style.transitionDelay) setTimeout(function(){ el.style.transitionDelay=''; }, 1200);
+    });
   },{threshold:0.1});
+  document.querySelectorAll('.article.fade-in').forEach(function(el,i){ el.style.transitionDelay=(i*0.08)+'s'; });
   document.querySelectorAll('.fade-in').forEach(function(el){obs.observe(el);});
 })();
 
-// Tab switching (Writes / Reads / Life)
+// Tab switching (Writes / Reads / Life / CV)
 function switchTab(id) {
   document.querySelectorAll('.section-tab').forEach(function(t){ t.classList.remove('active'); });
   document.querySelectorAll('.section-panel').forEach(function(p){ p.classList.remove('active'); });

@@ -147,6 +147,9 @@ nav {
   white-space: nowrap;
 }
 
+/* Blend white image backgrounds into the page color */
+.article-wrap img { mix-blend-mode: multiply; }
+
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
   .article-wrap { padding: 40px 20px 80px; }
@@ -185,7 +188,7 @@ nav {
     <p>The core M0 system comprises a few major components: the Minter Gateway, the M base asset, the M0 stablecoin extension framework, the M0 Swap Facility, and M0 Bridging Portals.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/core_system1.png" alt="M0 Core V1 - System Overview" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/core_system1.png" alt="M0 Core V1 - System Overview" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>The M0 Minter Gateway is where approved minters, including MXON, MoonPay, 1Money, and Bridge, begin their issuance journey. The process starts with the minting of M, the base asset and unit of account of the M0 V1 ecosystem. M is then wrapped into issuer-specific stablecoins: mUSD (MetaMask) for Bridge, ctUSD (Citrea), an Exodus for MoonPay, Saturn, USDKy(Kast) for MXON, and many, many others. This process keeps collateral and asset risks isolated per issuer, alleviating regulatory concerns while maintaining unified issuance standards and collateral transparency across all participants.</p>
@@ -230,7 +233,7 @@ Minter Owed M  = Minter Principal &times; Minter Index(now)</code></pre>
     <pre><code>Minter Principal -= Redemption Amount / Minter Index</code></pre>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image8.png" alt="Issuer process flow" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image8.png" alt="Issuer process flow" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2> M as base asset and unit of account</h2>
@@ -240,7 +243,7 @@ Minter Owed M  = Minter Principal &times; Minter Index(now)</code></pre>
     <p>M is a rebasing token: its total supply and holder balances grow over time without requiring external transactions. Unlike simple rebasing tokens, however, M has a dual nature. Only approved earners accrue yield and see their balances grow; non-earners&rsquo; balances remain static. All earners accrue the same Earner Rate, and currently, the majority of M earners are M0 extensions. This design choice laid the groundwork for the first white-label stablecoin issuance platform, launched in early 2025.</p>
 
     <figure style="margin:32px auto; max-width:60%">
-      <img src="images/m0-v1/image4.png" alt="M base asset and earners" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image4.png" alt="M base asset and earners" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>Just as the Minter Gateway maintains an index that tracks Owed M accrual on issuers&rsquo; debt, the M token maintains an M Index that tracks yield accrual for earners via the Earner Rate. The accounting logic mirrors that of issuer debt, using the same M0 common libraries and index accrual mechanics:</p>
@@ -260,7 +263,7 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>Since Solidity has no native support for Euler&rsquo;s number, <code>e^x</code> must be approximated. M0 implements a Pad&eacute; approximant of the exponential &mdash; a rational function of the form <code>P(x)/Q(x)</code> &mdash; which achieves the same asymptotic accuracy as a Taylor series of significantly higher degree, at lower computational cost. Per M0&rsquo;s published research, this is the first implementation of a Pad&eacute; approximation for continuous compounding in Solidity. <a href="https://github.com/m0-foundation/protocol/blob/main/src/libs/ContinuousIndexingMath.sol#L127" target="_blank" style="text-decoration:underline;text-underline-offset:3px">The M0 Pade implementation</a> has been audited, formally verified, and stress-tested in production for the last 2 years for over <strong>$2B</strong> in minting and redemption volume.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image9.png" alt="Pade approximation" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image9.png" alt="Pade approximation" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p><strong>A note on index accrual storage and timing.</strong> One rule that still confuses even experienced DeFi builders is when to write the index to contract storage. The key principle: always accrue and store the index before any action that could trigger a rate change. This ensures the index reflects accumulation under the previous rate before the new rate is calculated and applied. Additionally, even if the rate doesn&rsquo;t change, builders should also avoid letting timestamp deltas grow too large, since a large &Delta;t can cause overflows and amplify rounding errors in the exponential approximation. A sound practice is to periodically trigger an index update on user interactions, even when the accrual rate has not changed.</p>
@@ -312,7 +315,7 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>The natural moment to distribute this excess is when the Minter Index is updated inside the Minter Gateway. At that point, the excess is calculated and minted to the M0 Distribution Vault, where it becomes claimable by governance token holders.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image3.png" alt="Excess cash flow distribution" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image3.png" alt="Excess cash flow distribution" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2>M0 V1 Core Protocol Parameters</h2>
@@ -448,7 +451,7 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>Unlike transfers in many other systems, however, these do not require a prior yield claim. Since the M index accrues continuously, the transferable principal for any given amount can be derived from that amount and the current index at the time of transfer, with any unclaimed yield still reflected in the sender&rsquo;s remaining principal.</p>
 
     <figure style="margin:32px auto; max-width:60%">
-      <img src="images/m0-v1/image6.png" alt="WrappedM accounting" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image6.png" alt="WrappedM accounting" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>On claim, accrued yield can optionally be forwarded to a pre-configured claim recipient address that differs from the account itself. This matters most for earners like DeFi protocols and liquidity pools, which continuously accrue yield on their holdings but lack a reliable mechanism to handle that accrual themselves. As one specific example, the <a href="https://etherscan.io/address/0x970A7749EcAA4394C8B2Bf5F2471F41FD6b79288" target="_blank" style="text-decoration:underline;text-underline-offset:3px">USDC/wM Uniswap V3 pool</a> is registered as a WrappedM earner, with its claim recipient set to a <a href="https://etherscan.io/address/0xe0663f2372caa1459b7ade90812dc737ce587fa6#tokentxns" target="_blank" style="text-decoration:underline;text-underline-offset:3px">different address</a>, which handles downstream distribution.</p>
@@ -515,7 +518,7 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>Compliance and observability features quickly converged on a common, generic set: the ability to pause, freeze, and unfreeze accounts, and to execute force transfers for legally seized funds. Yield streaming, however, proved more varied, and extensions began to diverge into distinct models.</p>
 
     <figure style="margin:32px auto; max-width:60%">
-      <img src="images/m0-v1/image7.png" alt="M0 Extension Framework" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image7.png" alt="M0 Extension Framework" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>Four distinct extension types:</p>
@@ -539,13 +542,13 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>The role of permissioned unwrapper and wrapper was filled by a dedicated M0-controlled contract: the M0 Swap Facility, which enables seamless, price-discovery-free interoperability between permissionless extensions.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image10.png" alt="M0 Swap Facility" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image10.png" alt="M0 Swap Facility" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <p>To accommodate the requirements of certain GENIUS Act-compliant stablecoins, a more permissioned interoperability variant was introduced. Under this model, only designated issuers can swap into a given extension, and the extension itself cannot be wrapped into or unwrapped from another extension directly through the M0 Swap Facility.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image2.png" alt="Permissioned Swap Facility variant" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image2.png" alt="Permissioned Swap Facility variant" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2>Crosschain bridging and interoperability</h2>
@@ -569,7 +572,7 @@ Index(t2)               = Index(t1) &times; e^(EarnerRate &times; &Delta;t),  &D
     <p>M0 Portal exposes a unified messaging interface that routes through Hyperlane, Wormhole, and LayerZero adapters under the hood. This multi-bridge design keeps the core infrastructure credibly neutral and resilient to failures in any single messaging provider.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/m0-v1/image1.png" alt="M0 cross-chain bridging" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/m0-v1/image1.png" alt="M0 cross-chain bridging" style="width:100%; height:auto; display:block; border-radius:8px;">
     </figure>
 
     <h2>References</h2>

@@ -111,6 +111,9 @@ nav {
   margin: 16px 0;
 }
 
+/* Blend white image backgrounds into the page color */
+.article-wrap img { mix-blend-mode: multiply; }
+
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
   .article-wrap { padding: 40px 20px 80px; }
@@ -141,7 +144,7 @@ nav {
     <p>How is it built? Let&rsquo;s dive into the weeds while keeping the high-level design in sight.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/pyusdx/image1.jpg" alt="PYUSDx Developer Platform architecture" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/pyusdx/image1.jpg" alt="PYUSDx Developer Platform architecture" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Architecture &mdash; you&rsquo;ll need one of those big fancy screens to enjoy it in full</figcaption>
     </figure>
 
@@ -156,7 +159,7 @@ nav {
     <p>Compared to the first M0 Extension, <a href="https://docs.m0.org/protocol/wrapped-m" target="_blank" style="text-decoration:underline;text-underline-offset:3px">WrappedM</a>, PYUSDx allows earners to have different rates and tracks a separate rewards index for each of them. Such rewards are claimed explicitly.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/pyusdx/image2.jpg" alt="Base X asset issuance" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/pyusdx/image2.jpg" alt="Base X asset issuance" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Base X Asset Issuance</figcaption>
     </figure>
 
@@ -177,7 +180,7 @@ nav {
     <p>As mentioned previously, platform stablecoins like <a href="https://concrete.xyz/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Concrete</a>, <a href="https://www.cap.app/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Cap</a>, and <a href="https://saturn.credit/" target="_blank" style="text-decoration:underline;text-underline-offset:3px">Saturn</a> are ERC-20 compatible wrappers of PYUSDx: they are registered earners with automatic reward accrual and a standard set of compliance policy checks, including pausing and account freezing.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/pyusdx/image3.jpg" alt="Developer Platform core" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/pyusdx/image3.jpg" alt="Developer Platform core" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Developer Platform Core</figcaption>
     </figure>
 
@@ -202,7 +205,7 @@ nav {
     </ul>
 
     <figure style="margin:32px 0">
-      <img src="images/pyusdx/image4.jpg" alt="M0 Liquidity Layer" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/pyusdx/image4.jpg" alt="M0 Liquidity Layer" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">M0 Liquidity Layer &mdash; Orchestration, Onchain Intents, Solver Network</figcaption>
     </figure>
 
@@ -215,7 +218,7 @@ nav {
     <p>The technical architecture has a few unique points worth diving into. One example: the <code>ExtensionFactory</code> contract and its per-type beacon registries. Each extension type, like RevenueDirect and MultiMint, has its own beacon, and M0 registers every new implementation there as a numbered version, with older versions kept and still addressable. Extensions deployed through the factory are beacon proxies that resolve the current version on each call, so they inherit M0&rsquo;s upgrades by default, with no action needed from the builder. Upgrades are never forced: an extension&rsquo;s version manager can pin it to any registered version, which detaches the extension from the beacon&rsquo;s latest implementation, and can unpin it later to rejoin. Code and agentic nerds can dive deeper <a href="https://github.com/m0-platform/PYUSDx/blob/main/src/platform/ExtensionBeacon.sol" target="_blank" style="text-decoration:underline;text-underline-offset:3px">here</a>.</p>
 
     <figure style="margin:32px 0">
-      <img src="images/pyusdx/image5.jpg" alt="Beacon proxy with versioned upgrades" style="width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px;">
+      <img src="images/pyusdx/image5.jpg" alt="Beacon proxy with versioned upgrades" style="width:100%; height:auto; display:block; border-radius:8px;">
       <figcaption style="margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--text-3);">Beacon Proxy with Versioned Upgrades</figcaption>
     </figure>
 
