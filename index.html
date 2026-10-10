@@ -310,11 +310,12 @@ nav {
 .cv-what li { position: relative; padding-left: 16px; margin-bottom: 5px; }
 .cv-what li::before { content: "\2013"; position: absolute; left: 0; color: var(--text-4); }
 .cv-what a {
-  color: inherit; text-decoration: underline; text-decoration-color: var(--text-3);
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
   text-decoration-thickness: 1px; text-underline-offset: 3px;
   transition: color .2s, text-decoration-color .2s;
 }
-.cv-what a:hover { color: var(--accent); text-decoration-color: currentColor; }
+.cv-what a:hover { text-decoration-color: currentColor; }
 @media (max-width: 700px) {
   .cv-item { grid-template-columns: 1fr; gap: 4px; }
   .cv-what:has(.cv-logo) { padding-left: 48px; }
