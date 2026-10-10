@@ -298,6 +298,8 @@ nav {
   box-shadow: 0 0 0 1px var(--border);
 }
 .cv-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cv-logo-crest { background: #fff; }
+.cv-logo-crest img { object-fit: contain; padding: 2px; }
 .cv-what h4 {
   font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--text);
   letter-spacing: -0.011em; line-height: 1.45;
@@ -310,10 +312,9 @@ nav {
 .cv-what li { position: relative; padding-left: 16px; margin-bottom: 5px; }
 .cv-what li::before { content: "\2013"; position: absolute; left: 0; color: var(--text-4); }
 .cv-what a {
-  color: var(--accent); text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: inherit; text-decoration: underline; text-decoration-color: var(--text-3);
   text-decoration-thickness: 1px; text-underline-offset: 3px;
-  transition: color .2s, text-decoration-color .2s;
+  transition: text-decoration-color .2s;
 }
 .cv-what a:hover { text-decoration-color: currentColor; }
 @media (max-width: 700px) {
@@ -912,6 +913,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">Jun 2025 &ndash; Present</div>
         <div class="cv-what">
+          <div class="cv-logo cv-logo-crest"><img src="images/logos/harvard-extension.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org">Harvard Extension School</span></h4>
           <div class="cv-place">Master&rsquo;s degree (ALM), Finance (in progress)</div>
         </div>
@@ -919,6 +921,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">2007 &ndash; 2013</div>
         <div class="cv-what">
+          <div class="cv-logo cv-logo-crest"><img src="images/logos/kpi.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org">National Technical University of Ukraine &lsquo;Kyiv Polytechnic Institute&rsquo;</span></h4>
           <div class="cv-place">Master&rsquo;s degree, Applied Mathematics. Diploma with honors</div>
         </div>
@@ -926,6 +929,7 @@ An<span class="b">toni</span>na Norair
       <div class="cv-item">
         <div class="cv-when">2005 &ndash; 2007</div>
         <div class="cv-what">
+          <div class="cv-logo cv-logo-crest"><img src="images/logos/kpi.png" alt="" loading="lazy"></div>
           <h4><span class="cv-org">Polytechnic Lyceum of NTUU &lsquo;KPI&rsquo;</span></h4>
           <div class="cv-place">Advanced mathematics, physics, and economics program. Sole silver medalist of the year in a cohort of nearly 200 students</div>
         </div>
